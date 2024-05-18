@@ -21,9 +21,9 @@ class ConfigHelper:
 
     def _parse_config(self):
         config = ConfigHelper._load_config()
-        self.debug = config['Application']['debug']
+        self.debug = int(config['Application']['debug'])
         self.database_url = config['Database']['url']
-        self.database_port = config['Database']['port']
+        self.database_port = int(config['Database']['port'])
         self.database_username = config['Database']['username']
         self.database_password = config['Database']['password']
         self.database_schema = config['Database']['schema']
