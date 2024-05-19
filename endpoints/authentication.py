@@ -1,8 +1,8 @@
 from marshmallow.exceptions import ValidationError
 from quart import Blueprint, request
 
-from database.user_api import UserAPI
 from database.models import User
+from database.user_api import UserAPI
 from endpoints.helpers import generate_token, login_required
 from endpoints.models import UserLoginSchema, UserRegistrationSchema
 
