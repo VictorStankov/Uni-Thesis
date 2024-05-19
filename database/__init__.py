@@ -1,4 +1,8 @@
-from database.connection_builder import db
-from database.models import User
+from database.connection_builder import init
+import database.models
+from application.app_generator import app
 
-db.create_tables([User])
+
+@app.before_serving
+async def before_serving():
+    await init()

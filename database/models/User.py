@@ -1,8 +1,8 @@
-from database.models import BaseModel
-from peewee import AutoField, CharField
+from tortoise.models import Model
+from tortoise import fields
 
 
-class User(BaseModel):
-    id = AutoField()
-    username = CharField(100)
-    password = CharField(50)
+class User(Model):
+    id = fields.IntField(pk=True)
+    username = fields.CharField(max_length=255, unique=True, null=False)
+    password = fields.BinaryField(null=False)

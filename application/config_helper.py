@@ -1,6 +1,7 @@
 import configparser as cfg
 import os
 import logging as log
+import urllib.parse
 
 
 class ConfigHelper:
@@ -25,7 +26,7 @@ class ConfigHelper:
         self.database_url = config['Database']['url']
         self.database_port = int(config['Database']['port'])
         self.database_username = config['Database']['username']
-        self.database_password = config['Database']['password']
+        self.database_password = urllib.parse.quote_plus(config['Database']['password'])
         self.database_schema = config['Database']['schema']
 
     def get_config_value(self, parameter: str) -> str:
