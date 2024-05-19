@@ -12,3 +12,6 @@ class User(Model):
 
     def __str__(self):
         return f'<User: {self.username}>'
+
+    class Meta:
+        table = 'user'
