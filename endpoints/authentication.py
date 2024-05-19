@@ -55,4 +55,10 @@ async def login():
 @authentication.route('/test', methods=['GET'])
 @login_required
 async def test(user: User):
-    return user.username
+    user_info = await UserAPI.get_user_info(user=user)
+    return {
+        'first_name': user_info.first_name,
+        'last_name': user_info.last_name,
+        'email': user_info.email,
+        'phone': user_info.phone
+    }, 200
