@@ -41,4 +41,4 @@ jobs:
           cp /home/victor/.project_configs/thesis_config.cfg ./config.cfg
           source quart-env/bin/activate
           RUNNER_TRACKING_ID=""
-          hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log
+          hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log &
