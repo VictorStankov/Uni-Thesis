@@ -25,8 +25,6 @@ async def generate_token(username: str) -> str:
         'sub': username
     }
 
-    print(payload)
-
     return encode(
         payload,
         str(app.secret_key),
@@ -41,7 +39,7 @@ async def verify_user() -> User:
 
         return await UserAPI.get_user_by_username(decoded_token['sub'])
     except Exception as e:
-        log.error(e)
+        log.error(f'User Token verification failed: {e}')
 
 
 def login_required(f: Callable) -> Callable:
@@ -73,12 +71,10 @@ async def login():
             not await UserAPI.verify_credentials(result['username'], result['password'])):
         return {'message': 'Invalid user and password combination'}, 400
 
-    print(await generate_token(result['username']))
-
     return {
         'token_type': 'Bearer',
         'expires_in': 14400,
-        'authorization': await generate_token(result['username'])
+        'access_token': await generate_token(result['username'])
     }, 200
 
 
