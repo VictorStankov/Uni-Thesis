@@ -1,6 +1,6 @@
 import configparser as cfg
-import os
 import logging as log
+import os
 import urllib.parse
 
 

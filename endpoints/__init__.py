@@ -1,1 +1,1 @@
-import endpoints.authentication
+from .authentication import authentication

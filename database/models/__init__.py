@@ -1,1 +1,2 @@
-from database.models.User import User
+from .User import User
+from .UserBasicInfo import UserBasicInfo
