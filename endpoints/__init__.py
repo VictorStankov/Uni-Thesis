@@ -1,1 +1,1 @@
-import endpoints.test
+import endpoints.authentication

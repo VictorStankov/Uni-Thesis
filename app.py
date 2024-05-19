@@ -1,7 +1,7 @@
-import endpoints.test
+import endpoints.authentication
 from application.app_generator import app
 
-app.register_blueprint(endpoints.test.test)
+app.register_blueprint(endpoints.authentication.authentication)
 
 if __name__ == '__main__':
     app.run()
