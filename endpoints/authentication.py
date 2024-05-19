@@ -63,7 +63,7 @@ async def login():
     }
 
     try:
-        result = UserSchema().load(args)
+        result = UserLoginSchema().load(args)
     except ValidationError as e:
         return e.messages, 400
 

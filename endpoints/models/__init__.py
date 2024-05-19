@@ -1,1 +1,1 @@
-from endpoints.models.User import UserSchema
+from .User import UserLoginSchema, UserRegistrationSchema
