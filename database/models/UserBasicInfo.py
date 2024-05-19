@@ -1,11 +1,9 @@
 from tortoise import fields
 from tortoise.models import Model
 
-from database.models import User
-
 
 class UserBasicInfo(Model):
-    user: fields.OneToOneRelation[User] = fields.OneToOneField('models.User', related_name='basic_info')
+    user = fields.OneToOneField('models.User', related_name='basic_info')
     email = fields.CharField(max_length=255, null=False)
     first_name = fields.CharField(max_length=50, null=False)
     last_name = fields.CharField(max_length=50, null=False)
