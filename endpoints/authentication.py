@@ -18,15 +18,18 @@ async def register():
     except ValidationError as e:
         return e.messages, 400
 
-    await UserAPI.create_user(
-        username=result.get('username'),
-        password=result.get('password'),
-        email=result.get('email'),
-        first_name=result.get('first_name'),
-        last_name=result.get('last_name'),
-        phone=result.get('phone')
-    )
-    return {'message': 'User created successfully'}, 200
+    try:
+        await UserAPI.create_user(
+            username=result.get('username'),
+            password=result.get('password'),
+            email=result.get('email'),
+            first_name=result.get('first_name'),
+            last_name=result.get('last_name'),
+            phone=result.get('phone')
+        )
+        return {'message': 'User created successfully'}, 200
+    except Exception as e:
+        return {'message': 'User already exists'}, 400
 
 
 @authentication.route('/login', methods=['GET'])
