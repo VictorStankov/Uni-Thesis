@@ -1,7 +1,7 @@
 import datetime
 import logging as log
 from functools import wraps
-from typing import Callable
+from typing import Callable, Union
 
 import jwt
 from quart import request
@@ -27,14 +27,19 @@ async def generate_token(username: str) -> str:
     )
 
 
-async def verify_user() -> User:
-    authorization_header = request.headers.get('Authorization').replace('Bearer ', '')
+async def verify_user() -> Union[User, None]:
+    authorization_header = request.headers.get('Authorization')
+
+    if not authorization_header:
+        log.debug(f'Authorization header is missing')
+        return None
+
     try:
-        decoded_token = jwt.decode(authorization_header, str(app.secret_key), algorithms='HS512')
+        decoded_token = jwt.decode(authorization_header.replace('Bearer ', ''), str(app.secret_key), algorithms='HS512')
 
         return await UserAPI.get_user_by_username(decoded_token['sub'])
     except Exception as e:
-        log.error(f'User Token verification failed: {e}')
+        log.debug(f'User Token verification failed: {e}')
 
 
 def login_required(f: Callable) -> Callable:
