@@ -2,6 +2,7 @@ from typing import List
 
 import bcrypt
 
+from application.exceptions import UserNotFoundException, UserAlreadyExistsException
 from database.models import User, UserBasicInfo
 
 
@@ -35,7 +36,7 @@ class UserAPI:
             last_name: str,
             phone: str) -> None:
         if await UserAPI.user_exists(username=username):
-            raise Exception('User already exists')
+            raise UserAlreadyExistsException(username=username)
 
         hash_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         user = await User.create(
@@ -49,7 +50,7 @@ class UserAPI:
     async def set_password(username: str, password: str) -> None:
         user = await User.filter(username=username).first()
         if user is None:
-            raise Exception('User not found')
+            raise UserNotFoundException(username=username)
 
         user.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -57,7 +58,7 @@ class UserAPI:
     async def delete_user(username: str) -> None:
         user = await User.filter(username=username).first()
         if user is None:
-            raise Exception('User not found')
+            raise UserNotFoundException(username=username)
 
         await user.delete()
 
@@ -65,6 +66,6 @@ class UserAPI:
     async def verify_credentials(username: str, password: str) -> bool:
         user = await User.filter(username=username).first()
         if user is None:
-            raise Exception('User not found')
+            raise UserNotFoundException(username=username)
 
         return bcrypt.checkpw(password.encode('utf-8'), user.password)

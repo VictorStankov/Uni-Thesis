@@ -1,6 +1,7 @@
 from marshmallow.exceptions import ValidationError
-from quart import Blueprint, request
+from quart import Blueprint, request, make_response
 
+from application.exceptions import UserAlreadyExistsException
 from database.models import User
 from database.user_api import UserAPI
 from endpoints.helpers import generate_token, login_required
@@ -28,8 +29,8 @@ async def register():
             phone=result.get('phone')
         )
         return {'message': 'User created successfully'}, 200
-    except Exception as e:
-        return {'message': 'User already exists'}, 400
+    except UserAlreadyExistsException as e:
+        return {'message': e.message}, 400
 
 
 @authentication.route('/login', methods=['GET'])
