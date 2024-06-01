@@ -2,6 +2,7 @@ import configparser as cfg
 import logging as log
 import os
 import urllib.parse
+from typing import Union
 
 
 class ConfigHelper:
@@ -29,7 +30,7 @@ class ConfigHelper:
         self.database_password = urllib.parse.quote_plus(config['Database']['password'])
         self.database_schema = config['Database']['schema']
 
-    def get_config_value(self, parameter: str) -> str:
+    def get_config_value(self, parameter: str) -> Union[int, str]:
         if parameter not in self.__dict__:
             log.error('Parameter not found')
             raise KeyError(parameter)
