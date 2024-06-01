@@ -18,7 +18,6 @@ export default function Login() {
         .then(token => {
             if (token.access_token){
                 login(token)
-                console.log(token)
                 navigate('/')
             }
             else {
