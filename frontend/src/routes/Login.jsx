@@ -17,7 +17,7 @@ export default function Login() {
         .then(r => r.json())
         .then(token => {
             if (token.access_token){
-                login(token)
+                login(token.access_token)
                 navigate('/')
             }
             else {
