@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {login} from "../auth"
 import {useNavigate} from "react-router-dom";
-import logo from "./logo.svg"
+import logo from "../assets/logo.svg"
 
 export default function Login() {
     const [username, setUsername] = useState('')
