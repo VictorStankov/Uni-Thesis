@@ -6,7 +6,7 @@ from typing import Callable, Union
 import jwt
 from quart import request
 
-from application.app_generator import app
+from application import app
 from database import UserAPI
 from database.models import User
 
