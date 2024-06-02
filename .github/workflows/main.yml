@@ -26,10 +26,29 @@ jobs:
           source quart-env/bin/activate
           python3 -m pip install -r requirements.txt
           python3 -m pip install hypercorn
+
+      - name: Build frontend
+        run: |
           cd frontend
           npm install
           npm run build
           cd ..
+
+  validate:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: Kill hypercorn
+        run: pkill hypercorn || true
+
+      - name: Execute application
+        run: |
+          cp /home/victor/.project_configs/thesis_config.cfg ./config.cfg
+          source quart-env/bin/activate
+          RUNNER_TRACKING_ID=""
+          timeout 15s hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log
+
   deploy:
     runs-on: self-hosted
     needs: build
