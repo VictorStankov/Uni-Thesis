@@ -1,5 +1,5 @@
 from quart import Quart
-from quart_cors import cors
+# from quart_cors import cors
 
 
 def create_app(debug: int) -> Quart:
