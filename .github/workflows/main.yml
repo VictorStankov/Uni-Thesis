@@ -51,7 +51,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    needs: build
+    needs: validate
     
     steps:
       # Kill hypercorn server, if running already
