@@ -19,10 +19,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Set up pyenv
+        run: |
+          export PYENV_ROOT="$HOME/.pyenv"
+          [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+          eval "$(pyenv init -)"
+          pyenv activate uni-thesis
+
       # Setup virtual env, install dependencies
       - name: Create new virtual env and activate it
         run: |
           python3 -m venv quart-env
+          source deactivate
           source quart-env/bin/activate
           python3 -m pip install -r requirements.txt
           python3 -m pip install hypercorn
