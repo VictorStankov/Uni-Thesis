@@ -24,7 +24,7 @@ jobs:
           export PYENV_ROOT="$HOME/.pyenv"
           [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
           eval "$(pyenv init -)"
-          pyenv activate uni-thesis
+          pyenv activate uni-thesis-env
 
       # Setup virtual env, install dependencies
       - name: Create new virtual env and activate it
