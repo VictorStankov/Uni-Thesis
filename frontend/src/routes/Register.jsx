@@ -152,7 +152,7 @@ export default function Register() {
         )
     }
 
-    const SecondaryPage = () => {
+    const DetailsPage = () => {
         return (
             <>
                 <form className="space-y-6" action="#">
@@ -208,12 +208,11 @@ export default function Register() {
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img className="mx-auto h-20 w-auto"
                          src={logo} alt="Atlas logo"/>
-                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign
-                        Up</h2>
+                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create New Account</h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    {pageStatus === 0 ? InitialPage(handleUsernameChange, handlePasswordChange, handleEmailChange, pageStatusChange) : SecondaryPage()}
+                    {pageStatus === 0 ? InitialPage() : DetailsPage()}
                 </div>
 
                 <p className="mt-10 text-center text-sm text-gray-500 w-64">
