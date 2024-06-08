@@ -2,6 +2,7 @@ import { Routes, Route, Outlet, Link } from "react-router-dom";
 import {useAuth, logout} from './auth.jsx'
 import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
+import Register from "./routes/Register.jsx"
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
         <Route element={<Layout />} >
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="*" element={<Home />} />
         </Route>
     </Routes>
