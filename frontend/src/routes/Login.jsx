@@ -8,24 +8,23 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
-    const onSubmitClick = (e)=>{
-    e.preventDefault()
+    const onSubmitClick = (e) => {
+        e.preventDefault()
 
-    fetch(`/api/login?username=${username}&password=${password}`, {
-        method: 'get'
-    })
-        .then(r => r.json())
-        .then(token => {
-            if (token.access_token){
-                login(token.access_token)
-                navigate('/')
-            }
-            else {
-                console.log("Please type in correct username/password")
-            }
-        }
-    )
-  }
+        fetch(`/api/login?username=${username}&password=${password}`, {
+            method: 'get'
+        })
+            .then(r => r.json())
+            .then(token => {
+                    if (token.access_token) {
+                        login(token.access_token)
+                        navigate('/')
+                    } else {
+                        console.log("Please type in correct username/password")
+                    }
+                }
+            )
+    }
     const handleUsernameChange = (e) => {
         setUsername(e.target.value)
     }
@@ -46,31 +45,26 @@ export default function Login() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" >
+                    <form className="space-y-6" action="#">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Username</label>
+                            <label htmlFor="email"
+                                   className="block text-sm font-medium leading-6 text-gray-900">Username</label>
                             <div className="mt-2">
                                 <input id="username" name="username" autoComplete="email" required inputMode="text"
                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                onChange={handleUsernameChange} value={username}
+                                       onChange={handleUsernameChange} value={username}
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="password"
-                                       className="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                                <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot
-                                        password?</a>
-                                </div>
-                            </div>
+                            <label htmlFor="password"
+                                   className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                             <div className="mt-2">
                                 <input id="password" name="password" type="password" autoComplete="current-password"
                                        required
                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                onChange={handlePasswordChange} value={password}
+                                       onChange={handlePasswordChange} value={password}
                                 />
                             </div>
                         </div>
@@ -83,7 +77,7 @@ export default function Login() {
                         </div>
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
+                    <p className="mt-10 text-center text-sm text-gray-500 w-64">
                         Not a member?
                         <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Start a 14
                             day free trial</a>
