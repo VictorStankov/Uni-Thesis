@@ -7,7 +7,18 @@ export default function Register() {
     const [message, setMessage] = useState('')
     const [pageStatus, setPageStatus] = useState(0)
 
+    const successInput = 'bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5' // dark:bg-gray-700 dark:border-green-500  dark:text-green-400 dark:placeholder-green-500'
+    const errorInput = 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5' // dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 dark:bg-gray-700'
+    const normalInput = 'bg-gray-50 border border-gray-500 text-gray-900 placeholder-gray-700 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
+
     const navigate = useNavigate()
+
+    const [usernameInput, setUsernameInput] = useState(null)
+    const [passwordInput, setPasswordInput] = useState(null)
+    const [passwordConfirmInput, setPasswordConfirmInput] = useState(null)
+    const [emailInput, setEmailInput] = useState(null)
+    const [firstNameInput, setFirstNameInput] = useState(null)
+    const [lastNameInput, setLastNameInput] = useState(null)
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -17,27 +28,69 @@ export default function Register() {
     const [lastName, setLastName] = useState('')
     const [phone, setPhone] = useState('')
 
+    const checkMainPageComplete = () => {
+        return usernameInput && passwordConfirmInput && emailInput
+    }
+
+    const checkDetailsPageComplete = () => {
+        return firstNameInput && lastNameInput
+    }
+
     const handleUsernameChange = (e) => {
+        if (e.target.value === '' || e.target.value === null)
+            setUsernameInput(false)
+        else
+            setUsernameInput(true)
         setUsername(e.target.value)
     }
 
     const handlePasswordChange = (e) => {
+        if (e.target.value.length < 6 || e.target.value !== passwordConfirm) {
+            setPasswordInput(false)
+            setPasswordConfirmInput(false)
+        } else {
+            setPasswordInput(true)
+            setPasswordConfirmInput(true)
+        }
         setPassword(e.target.value)
     }
 
     const handlePasswordConfirm = (e) => {
+        if (e.target.value.length < 6 || e.target.value !== password) {
+            setPasswordInput(false)
+            setPasswordConfirmInput(false)
+        } else {
+            setPasswordInput(true)
+            setPasswordConfirmInput(true)
+        }
         setPasswordConfirm(e.target.value)
     }
 
     const handleEmailChange = (e) => {
+        if (
+            e.target.value === '' ||
+            e.target.value === null ||
+            !e.target.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+        )
+            setEmailInput(false)
+        else
+            setEmailInput(true)
         setEmail(e.target.value)
     }
 
     const handleFirstNameChange = (e) => {
+        if (e.target.value === '' || e.target.value === null)
+            setFirstNameInput(false)
+        else
+            setFirstNameInput(true)
         setFirstName(e.target.value)
     }
 
     const handleLastNameChange = (e) => {
+        if (e.target.value === '' || e.target.value === null)
+            setLastNameInput(false)
+        else
+            setLastNameInput(true)
         setLastName(e.target.value)
     }
 
@@ -78,13 +131,16 @@ export default function Register() {
             .catch(r => {
                 r.json().then((json) => {
                         setMessage(`${json.message}... Redirecting`)
-                        setTimeout(() => {window.location.reload()}, 3000)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 3000)
                     }
                 )
             })
     }
 
     const InitialPage = () => {
+        const button = !checkMainPageComplete()
         return (
             <>
                 <form className="space-y-6" action="#">
@@ -93,7 +149,7 @@ export default function Register() {
                                className="block text-sm font-medium leading-6 text-gray-900">Username</label>
                         <div className="mt-2">
                             <input id="username" name="username" autoComplete="username" required inputMode="text"
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={usernameInput === null ? normalInput : usernameInput ? successInput : errorInput}
                                    onChange={handleUsernameChange} value={username}
                             />
                         </div>
@@ -104,7 +160,7 @@ export default function Register() {
                                className="block text-sm font-medium leading-6 text-gray-900">Email</label>
                         <div className="mt-2">
                             <input id="email" name="email" autoComplete="email" required inputMode="email"
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={emailInput === null ? normalInput : emailInput ? successInput : errorInput}
                                    onChange={handleEmailChange} value={email}
                             />
                         </div>
@@ -118,7 +174,7 @@ export default function Register() {
                         <div className="mt-2">
                             <input id="password" name="password" type="password" autoComplete="current-password"
                                    required
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={passwordInput === null ? normalInput : passwordInput ? successInput : errorInput}
                                    onChange={handlePasswordChange} value={password}
                             />
                         </div>
@@ -133,14 +189,14 @@ export default function Register() {
                         <div className="mt-2">
                             <input id="confirm_password" name="confirm_password" type="password"
                                    required
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={passwordInput === null ? normalInput : passwordInput ? successInput : errorInput}
                                    onChange={handlePasswordConfirm} value={passwordConfirm}
                             />
                         </div>
                     </div>
 
                     <div>
-                        <button type="button" onClick={pageStatusChange} value={1}
+                        <button type="button" onClick={pageStatusChange} value={1} disabled={button}
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
                             Up
                         </button>
@@ -153,6 +209,7 @@ export default function Register() {
     }
 
     const DetailsPage = () => {
+        const button = !checkDetailsPageComplete()
         return (
             <>
                 <form className="space-y-6" action="#">
@@ -161,7 +218,7 @@ export default function Register() {
                                className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
                         <div className="mt-2">
                             <input id="firstName" name="firstName" autoComplete="given-name" required inputMode="text"
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={firstNameInput === null ? normalInput : firstNameInput ? successInput : errorInput}
                                    onChange={handleFirstNameChange} value={firstName}
                             />
                         </div>
@@ -172,7 +229,7 @@ export default function Register() {
                                className="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
                         <div className="mt-2">
                             <input id="lastName" name="lastName" autoComplete="family-name" required inputMode="text"
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={lastNameInput === null ? normalInput : lastNameInput ? successInput : errorInput}
                                    onChange={handleLastNameChange} value={lastName}
                             />
                         </div>
@@ -183,7 +240,7 @@ export default function Register() {
                                className="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
                         <div className="mt-2">
                             <input id="phone" name="phone" autoComplete="mobile tel" required inputMode="tel"
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                   className={normalInput}
                                    onChange={handlePhoneChange} value={phone}
                             />
                         </div>
@@ -191,7 +248,8 @@ export default function Register() {
 
                     <div>
                         <button type="submit" onClick={onSubmitClick}
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
+                                disabled={button}
+                                className=" flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
                             Up
                         </button>
                     </div>
@@ -208,7 +266,8 @@ export default function Register() {
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img className="mx-auto h-20 w-auto"
                          src={logo} alt="Atlas logo"/>
-                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create New Account</h2>
+                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create
+                        New Account</h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -224,9 +283,4 @@ export default function Register() {
             </div>
         </>
     )
-}
-
-
-function SecondaryPage() {
-
 }
