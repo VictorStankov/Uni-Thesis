@@ -6,6 +6,11 @@ import logo from "../assets/logo.svg"
 export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
+    const [usernameInput, setUsernameInput] = useState(false)
+    const [passwordInput, setPasswordInput] = useState(false)
+
+    const [message, setMessage] = useState('')
     const navigate = useNavigate()
 
     const onSubmitClick = (e) => {
@@ -20,20 +25,29 @@ export default function Login() {
                         login(token.access_token)
                         navigate('/')
                     } else {
-                        console.log("Please type in correct username/password")
+                        setMessage(token.message)
                     }
                 }
             )
     }
     const handleUsernameChange = (e) => {
+        if (e.target.value === '' || e.target.value === null)
+            setUsernameInput(false)
+        else
+            setUsernameInput(true)
         setUsername(e.target.value)
     }
 
     const handlePasswordChange = (e) => {
+        if (e.target.value.length < 6)
+            setPasswordInput(false)
+        else
+            setPasswordInput(true)
         setPassword(e.target.value)
     }
 
 
+    const button = !(usernameInput && passwordInput)
     return (
         <>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -70,7 +84,7 @@ export default function Login() {
                         </div>
 
                         <div>
-                            <button type="submit" onClick={onSubmitClick}
+                            <button type="submit" onClick={onSubmitClick} disabled={button}
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
                                 in
                             </button>
@@ -82,6 +96,7 @@ export default function Login() {
                         <a href="/register"
                            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Sign Up Here</a>
                     </p>
+                    <p className="mt-10 text-center text-sm text-red-500 w-64">{message}</p>
                 </div>
             </div>
         </>
