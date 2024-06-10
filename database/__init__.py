@@ -1,7 +1,7 @@
 from tortoise.contrib.quart import register_tortoise
 
 from application import config_helper
-from application.app_generator import app
+from application import app
 from .models import *
 from .user_api import UserAPI
 
