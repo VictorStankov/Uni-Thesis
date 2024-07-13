@@ -19,7 +19,7 @@ class Car(Model):
     base_image_path = fields.CharField(max_length=255, null=False)
 
     def __str__(self):
-        return f"{self.name} - {self.type}"
+        return f"{self.name} - {self.type.value}"
 
     def to_dict(self):
         return {

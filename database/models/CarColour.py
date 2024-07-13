@@ -14,12 +14,12 @@ class Colour(Enum):
 
 class CarColour(Model):
     id = fields.IntField(pk=True)
-    car_id = fields.ForeignKeyField('models.Car', related_name='colours', to_field='id')
+    car_id = fields.ForeignKeyField('models.Car', related_name='colours', related_query_name='colour')
     colour = fields.data.CharEnumField(Colour)
     price_increase = fields.FloatField(null=False)
 
     def __str__(self):
-        return f"{self.car_id} - {self.colour.name} - {self.price_increase}"
+        return f"{self.car_id} - {self.colour.value} - {self.price_increase}"
 
     def to_dict(self):
         return {
