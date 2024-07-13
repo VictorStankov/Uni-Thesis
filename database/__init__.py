@@ -4,6 +4,7 @@ from application import config_helper
 from application import app
 from .models import *
 from .user_api import UserAPI
+from .car_api import CarAPI
 
 register_tortoise(
     app=app,
