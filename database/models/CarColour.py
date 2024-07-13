@@ -21,5 +21,12 @@ class CarColour(Model):
     def __str__(self):
         return f"{self.car_id} - {self.colour.name} - {self.price_increase}"
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'colour': self.colour.value,
+            'price_increase': self.price_increase
+        }
+
     class Meta:
         table = 'car_colour'

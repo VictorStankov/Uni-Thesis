@@ -21,5 +21,14 @@ class Car(Model):
     def __str__(self):
         return f"{self.name} - {self.type}"
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'type': self.type.value,
+            'base_price': self.base_price,
+            'base_image_path': self.base_image_path
+        }
+
     class Meta:
         table = 'car'
