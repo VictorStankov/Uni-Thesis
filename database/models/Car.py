@@ -1,7 +1,7 @@
+from enum import Enum
+
 from tortoise import fields
 from tortoise.models import Model
-
-from enum import Enum
 
 
 class CarType(Enum):
