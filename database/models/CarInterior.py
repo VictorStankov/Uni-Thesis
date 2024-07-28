@@ -14,6 +14,7 @@ class CarInterior(Model):
     id = fields.IntField(pk=True)
     car = fields.ForeignKeyField('models.Car', related_name='interiors', related_query_name='interior')
     interior_type = fields.data.CharEnumField(Interior)
+    is_base = fields.data.BooleanField(null=False)
     price_increase = fields.FloatField(null=False)
 
     def __str__(self):
@@ -23,6 +24,7 @@ class CarInterior(Model):
         return {
             'id': self.id,
             'interior': self.interior_type.value,
+            'is_base': self.is_base,
             'price_increase': self.price_increase
         }
 
