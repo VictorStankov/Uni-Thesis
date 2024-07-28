@@ -20,6 +20,10 @@ export default function Config(props) {
                 })
         }, [props.name]);
 
+    const handleSubmit = () => {
+        console.log('Click')
+    }
+
     return(
         <div className='flex-row flex flex-nowrap'>
             <form className='p-2 flex flex-col'>
@@ -48,6 +52,7 @@ export default function Config(props) {
                     ))}
                 </ul>
                 <p>{car.base_price === undefined ? "" : car.base_price + selectedColour.price_increase + selectedInterior.price_increase}</p>
+                <button type="button" onClick={handleSubmit}>Submit Order</button>
             </form>
             <div className=''>
                 <img className="w-full rounded-lg" src={'/img/' + car.base_image_path} alt="Picture of a car"/>
