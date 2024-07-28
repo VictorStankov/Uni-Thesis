@@ -3,6 +3,7 @@ import {useAuth, logout} from './auth.jsx'
 import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx"
+import Catalogue from "./routes/Catalogue.jsx";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/catalogue" element={<Catalogue/>} />
             <Route path="*" element={<Home />} />
         </Route>
     </Routes>
@@ -26,6 +28,9 @@ function Layout() {
                 <ul className="flex flex-row px-6">
                     <li className="px-2">
                         <Link to="/">Home</Link>
+                    </li>
+                    <li className="px-2">
+                        <Link to="/catalogue">Catalogue</Link>
                     </li>
                     {
                         loggedIn ?
