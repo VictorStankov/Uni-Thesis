@@ -7,6 +7,14 @@ class CarAPI:
         return await Car.all()
 
     @staticmethod
+    async def get_car_id_by_name(car_name: str):
+        return (await Car.filter(name=car_name).first()).id
+
+    @staticmethod
+    async def get_car_by_id(car_id: int):
+        return await Car.filter(id=car_id).first()
+
+    @staticmethod
     async def get_car_colour(car_id: int):
         return await CarColour.filter(car_id=car_id).all()
 
