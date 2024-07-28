@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Card from "./components/Catalogue/Card.jsx"
+import Config from "./components/Catalogue/Config.jsx";
 
 export default function Catalogue() {
     const {itemName} = useParams()
 
     return (
-        itemName === undefined ? <Gallery/> : <div><p>{itemName}</p></div>
+        itemName === undefined ? <Gallery/> : <Config name={itemName}/>
     )
 }
 
