@@ -1,21 +1,27 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-
+import {useParams} from "react-router-dom";
+import Card from "./components/Catalogue/Card.jsx"
 
 export default function Catalogue() {
+    const {itemName} = useParams()
+
+    return (
+        itemName === undefined ? <Gallery/> : <div><p>{itemName}</p></div>
+    )
+}
+
+function Gallery() {
     const [cars, setCars] = useState([])
 
     useEffect(() => {
-        fetch(`/api/cars/list`, {
-            method: 'get'
-        })
-            .then(r => r.json())
-            .then(data => {
-                setCars(data.cars);
+            fetch(`/api/cars/list`, {
+                method: 'get'
             })
-    }, []);
-
-    console.log(cars)
+                .then(r => r.json())
+                .then(data => {
+                    setCars(data.cars);
+                })
+        }, []);
 
     return (
         <div className='flex-col w-full'>
@@ -27,28 +33,6 @@ export default function Catalogue() {
                     ))}
                 </ul>
             </div>
-        </div>
-    )
-}
-
-function Card(props) {
-    const navigate = useNavigate()
-
-    const handleClick = () => {
-        navigate('/' + props.name)
-    }
-
-    return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg">
-            <button onClick={handleClick} type={"button"} className="w-full overflow-hidden shadow-lg">
-                <img className="w-full" src={'/img/' + props.img} alt="Picture of a car"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{props.name}</div>
-                    <p className="text-gray-700 text-base">
-                        {props.price}
-                    </p>
-                </div>
-            </button>
         </div>
     )
 }
