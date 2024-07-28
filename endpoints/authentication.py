@@ -7,7 +7,7 @@ from database.user_api import UserAPI
 from endpoints.helpers import generate_token, login_required
 from endpoints.models import UserLoginSchema, UserRegistrationSchema
 
-authentication = Blueprint('test', __name__)
+authentication = Blueprint('auth', __name__)
 
 
 @authentication.route('/register', methods=['POST'])
