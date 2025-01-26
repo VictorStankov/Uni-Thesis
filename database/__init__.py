@@ -5,6 +5,7 @@ from application import app
 from .models import *
 from .user_api import UserAPI
 from .car_api import CarAPI
+from .order_api import OrderAPI
 
 register_tortoise(
     app=app,
