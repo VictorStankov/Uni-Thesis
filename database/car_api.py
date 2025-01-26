@@ -32,8 +32,8 @@ class CarAPI:
 
     @staticmethod
     async def get_car_colour(car_id: int):
-        return await CarColour.filter(car_id=car_id).order_by("-is_base", "price_increase").all()
+        return await CarColour.filter(car_id=car_id).order_by("-is_base", "price_increase", "colour").all()
 
     @staticmethod
     async def get_car_interior(car_id: int):
-        return await CarInterior.filter(car_id=car_id).order_by("-is_base", "price_increase").all()
+        return await CarInterior.filter(car_id=car_id).order_by("-is_base", "price_increase", "interior_type").all()
