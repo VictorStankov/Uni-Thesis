@@ -3,6 +3,22 @@ from database import Car, CarColour, CarInterior
 
 class CarAPI:
     @staticmethod
+    async def car_exists(car_id: int):
+        return await Car.exists(id=car_id)
+
+    @staticmethod
+    async def car_configuration_exists(car_id: int, colour_id: int, interior_id: int):
+        return await Car.exists(id=car_id, colour=colour_id, interior=interior_id)
+
+    @staticmethod
+    async def calculate_price(car_id: int, colour_id: int, interior_id: int):
+        car_price = (await Car.get(id=car_id)).base_price
+        colour_price = (await CarColour.get(id=colour_id)).price_increase
+        interior_price = (await CarInterior.get(id=interior_id)).price_increase
+
+        return car_price + colour_price + interior_price
+
+    @staticmethod
     async def get_cars():
         return await Car.all()
 
