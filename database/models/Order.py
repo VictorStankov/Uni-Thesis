@@ -13,14 +13,13 @@ class Order(Model):
     def __str__(self):
         return f"{self.car} - {self.car} - {self.interior_type} - {self.colour} - {self.price} - {self.order_placer}"
 
-    def to_dict(self):
+    async def to_dict(self):
         return {
             'id': self.id,
-            'car': self.car,
-            'interior_type': self.interior_type,
-            'colour': self.colour,
-            'price': self.price,
-            'order_placer': self.order_placer,
+            'car': (await self.car).to_dict(),
+            'interior_type': (await self.interior_type).to_dict(),
+            'colour': (await self.colour).to_dict(),
+            'price': self.price
         }
 
     class Meta:
