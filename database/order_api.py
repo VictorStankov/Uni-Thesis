@@ -2,14 +2,16 @@ from database import Order
 
 class OrderAPI:
     @staticmethod
+    async def order_exists(order_id: int):
+        return await Order.exists(id=order_id)
+
+    @staticmethod
     async def get_order(order_id: int):
-        order = await Order.get(id=order_id)
-        return order
+        return await Order.get(id=order_id)
 
     @staticmethod
     async def get_user_orders(user_id: int):
-        orders = await Order.get(order_placer=user_id)
-        return orders
+        return await Order.filter(order_placer=user_id).all()
 
     @staticmethod
     async def create_order(car_id: int, colour_id: int, interior_id: int, user_id: int, price: float):
