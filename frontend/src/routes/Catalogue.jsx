@@ -26,11 +26,11 @@ function Gallery() {
 
     return (
         <div className='flex-col w-full'>
-            <h1>Catalogue</h1>
-            <div className='flex-row flex-wrap w-full'>
-                <ul className='flex-row'>
+            <h1 className='font-bold place-self-center text-2xl'>Catalogue</h1>
+            <div className='mt-16'>
+                <ul className='grid grid-flow-col justify-stretch items-stretch justify-items-center'>
                     {cars.map((item, index) => (
-                        <Card key={item.id} img={item.base_image_path} name={item.name} price={item.base_price}/>
+                        <Card className='w-full' key={item.id} img={item.base_image_path} name={item.name} price={item.base_price}/>
                     ))}
                 </ul>
             </div>
