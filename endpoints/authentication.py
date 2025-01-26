@@ -2,10 +2,10 @@ from marshmallow.exceptions import ValidationError
 from quart import Blueprint, request, make_response
 
 from application.exceptions import UserAlreadyExistsException
-from database.models import User
-from database.user_api import UserAPI
-from endpoints.helpers import generate_token, login_required
-from endpoints.models import UserLoginSchema, UserRegistrationSchema
+from database import User
+from database import UserAPI
+from .helpers import generate_token, login_required
+from .models import UserLoginSchema, UserRegistrationSchema
 
 authentication = Blueprint('auth', __name__)
 
