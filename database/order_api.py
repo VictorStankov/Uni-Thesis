@@ -1,4 +1,5 @@
-from database import Order
+from database import Order, CarAPI
+
 
 class OrderAPI:
     @staticmethod
@@ -14,12 +15,14 @@ class OrderAPI:
         return await Order.filter(order_placer=user_id).all()
 
     @staticmethod
-    async def create_order(car_id: int, colour_id: int, interior_id: int, user_id: int, price: float):
+    async def create_order(car_id: int, colour_id: int, interior_id: int, user_id: int):
+        price = await CarAPI.calculate_price(car_id=car_id, colour_id=colour_id, interior_id=interior_id)
+
         order = await Order.create(
             car_id=car_id,
             colour_id=colour_id,
             interior_id=interior_id,
-            user_id=user_id,
+            order_placer_id=user_id,
             price=price
         )
 
