@@ -1,4 +1,4 @@
-from quart import Blueprint, request
+from quart import Blueprint
 from database import CarAPI
 
 car_blueprint = Blueprint('car', __name__)
