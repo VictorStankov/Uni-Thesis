@@ -1,6 +1,12 @@
 import {useEffect, useState} from "react";
+import {authFetch, useAuth} from "../../../auth.jsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Config(props) {
+    const navigate = useNavigate()
+
+    const [loggedIn] = useAuth()
+
     const [car, setCar] = useState({})
     const [carColours, setCarColours] = useState([])
     const [carInteriors, setCarInteriors] = useState([])
@@ -17,11 +23,47 @@ export default function Config(props) {
                     setCar(data.car);
                     setCarColours(data.colours);
                     setCarInteriors(data.interiors);
+
+                    setColour(data.colours.find(item => item.is_base === true))
+                    setInterior(data.interiors.find(item => item.is_base === true))
                 })
         }, [props.name]);
 
     const handleSubmit = () => {
-        console.log('Click')
+        const body = {
+            car_id: car.id,
+            colour_id: selectedColour.id,
+            interior_id: selectedInterior.id
+        }
+
+        console.log(body)
+
+        if(loggedIn === false) {
+            navigate('/login')
+        }
+
+        authFetch(`/api/orders`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+            .then(r => {
+                    if (r.ok) {
+                        navigate('/') // TODO: Redirect to orders screen
+                    }
+                }
+            )
+            .catch(r => {
+                r.json().then((json) => {
+                    console.log(`${json.message}... Redirecting`) // TODO: Add Error Message
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 3000)
+                    }
+                )
+            })
     }
 
     return(
