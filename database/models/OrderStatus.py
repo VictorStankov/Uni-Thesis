@@ -9,7 +9,7 @@ class OrderStatus(Model):
     def __str__(self):
         return f"{self.id} - {self.name}"
 
-    async def to_dict(self):
+    def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
