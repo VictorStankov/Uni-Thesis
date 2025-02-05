@@ -1,1 +1,2 @@
-from .User import UserLoginSchema, UserRegistrationSchema
+from .UserSchema import UserLoginSchema, UserRegistrationSchema
+from .OrderSchema import OrderSchema

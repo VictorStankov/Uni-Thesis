@@ -15,7 +15,7 @@ class Colour(Enum):
 
 class CarColour(Model):
     id = fields.IntField(pk=True)
-    car = fields.ForeignKeyField('models.Car', related_name='colours', related_query_name='colour')
+    car = fields.ForeignKeyField('models.Car', related_name='colour', related_query_name='colour')
     colour = fields.data.CharEnumField(Colour)
     is_base = fields.data.BooleanField(null=False)
     price_increase = fields.FloatField(null=False)

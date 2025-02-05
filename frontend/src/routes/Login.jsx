@@ -23,7 +23,7 @@ export default function Login() {
             .then(token => {
                     if (token.access_token) {
                         login(token.access_token)
-                        navigate('/')
+                        navigate(-1)
                     } else {
                         setMessage(token.message)
                     }

@@ -12,7 +12,7 @@ class Interior(Enum):
 
 class CarInterior(Model):
     id = fields.IntField(pk=True)
-    car = fields.ForeignKeyField('models.Car', related_name='interiors', related_query_name='interior')
+    car = fields.ForeignKeyField('models.Car', related_name='interior', related_query_name='interior')
     interior_type = fields.data.CharEnumField(Interior)
     is_base = fields.data.BooleanField(null=False)
     price_increase = fields.FloatField(null=False)
