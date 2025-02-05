@@ -1,3 +1,5 @@
+from venv import create
+
 from tortoise.contrib.quart import register_tortoise
 
 from application import config_helper
@@ -19,3 +21,7 @@ register_tortoise(
     modules={'models': ['database.models']},
     generate_schemas=True
 )
+
+@app.before_serving
+async def startup():
+    await create_order_statuses()
