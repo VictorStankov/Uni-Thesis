@@ -26,7 +26,15 @@ async def get_order_by_id(user: User, order_id: int):
 @login_required
 async def get_user_orders(user: User):
     orders = await OrderAPI.get_user_orders(user.id)
-    return {'orders': [{'id': order.id, 'car': (await order.car).to_dict()} for order in orders]}, 200  # FIXME
+    return {
+        'orders': [
+            {
+                'id': order.id,
+                'car': (await order.car).to_dict(),
+                'status': (await order.status).to_dict()
+            } for order in orders
+        ]
+    }, 200  # FIXME
 
 @order_blueprint.route('/orders', methods=['POST'])
 @login_required
