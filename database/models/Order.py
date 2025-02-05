@@ -20,7 +20,7 @@ class Order(Model):
     order_placer = fields.ForeignKeyField('models.User', related_name='order', related_query_name='order')
     created_at = fields.DatetimeField(null=False, auto_now_add=True)
     updated_at = fields.DatetimeField(null=False, auto_now=True)
-    status = fields.data.CharEnumField(Status, null=False, default=Status.Ordered)
+    status = fields.ForeignKeyField('models.OrderStatus', related_name='status', related_query_name='status')
 
     def __str__(self):
         return f"{self.car} - {self.car} - {self.interior} - {self.colour} - {self.price} - {self.order_placer}"
