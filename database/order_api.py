@@ -1,4 +1,4 @@
-from database import Order, CarAPI, OrderStatus
+from . import Order, CarAPI, OrderStatus
 
 
 class OrderAPI:
