@@ -24,4 +24,5 @@ register_tortoise(
 
 @app.before_serving
 async def startup():
-    await create_order_statuses()
+    await OrderStatus.create_order_statuses()
+    await EmployeePosition.create_employee_positions()

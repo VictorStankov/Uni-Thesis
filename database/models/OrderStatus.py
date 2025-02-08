@@ -1,5 +1,6 @@
 from tortoise import fields
 from tortoise.models import Model
+from tortoise.transactions import in_transaction
 
 
 class OrderStatus(Model):
@@ -14,6 +15,15 @@ class OrderStatus(Model):
             'id': self.id,
             'name': self.name,
         }
+
+    @staticmethod
+    async def create_order_statuses():
+        async with in_transaction():
+            statuses = ['Ordered', 'Paid', 'Manufactured', 'Shipped', 'Completed']
+
+            for i, status in enumerate(statuses):
+                if not await OrderStatus.exists(name=status):
+                    await OrderStatus.create(id=i + 1, name=status)
 
     class Meta:
         table = 'order_status'

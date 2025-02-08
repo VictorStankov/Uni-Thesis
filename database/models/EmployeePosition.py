@@ -23,8 +23,8 @@ class EmployeePosition(Model):
             'type': self.type.value,
         }
 
-    @classmethod
-    async def create_employee_positions(cls):
+    @staticmethod
+    async def create_employee_positions():
         async with in_transaction():
             positions = [x.value for x in Position]
 

@@ -1,5 +1,3 @@
-from tortoise.transactions import in_transaction
-
 from .UserBasicInfo import UserBasicInfo
 from .User import User
 from .Car import Car
@@ -9,11 +7,3 @@ from .OrderStatus import OrderStatus
 from .Employee import Employee
 from .EmployeePosition import EmployeePosition
 from .Order import Order
-
-async def create_order_statuses():
-    async with in_transaction():
-        statuses = ['Ordered', 'Paid', 'Manufactured', 'Shipped', 'Completed']
-
-        for i, status in enumerate(statuses):
-            if not await OrderStatus.exists(name=status):
-                await OrderStatus.create(id=i + 1, name=status)
