@@ -20,10 +20,11 @@ class Order(Model):
     created_at = fields.DatetimeField(null=False, auto_now_add=True)
     updated_at = fields.DatetimeField(null=False, auto_now=True)
     status = fields.ForeignKeyField('models.OrderStatus', related_name='status', related_query_name='status')
+    employee = fields.ForeignKeyField('models.Employee', related_name='orders', related_query_name='orders', null=True) # FIXME
 
     def __str__(self):
         return (f"{self.id} - {self.car} - {self.interior} - {self.colour} - {self.price} - {self.order_placer} - "
-                f"{self.created_at} - {self.updated_at} - {self.status}")
+                f"{self.created_at} - {self.updated_at} - {self.status} - {self.employee}")
 
     async def to_dict(self):
         return {
@@ -35,6 +36,7 @@ class Order(Model):
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
             'status': (await self.status).to_dict(),
+            'employee': (await self.employee).to_dict() if self.employee else {},  # FIXME
         }
 
     class Meta:
