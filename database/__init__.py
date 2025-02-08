@@ -1,5 +1,3 @@
-from venv import create
-
 from tortoise.contrib.quart import register_tortoise
 
 from application import config_helper
@@ -8,6 +6,7 @@ from .models import *
 from .user_api import UserAPI
 from .car_api import CarAPI
 from .order_api import OrderAPI
+from .employee_api import EmployeeAPI
 
 register_tortoise(
     app=app,
