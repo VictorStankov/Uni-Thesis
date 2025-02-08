@@ -15,6 +15,10 @@ class OrderAPI:
         return await Order.filter(order_placer=user_id).all()
 
     @staticmethod
+    async def get_employee_orders(employee_id: int):
+        return await Order.filter(employee_id=employee_id).all()
+
+    @staticmethod
     async def create_order(car_id: int, colour_id: int, interior_id: int, user_id: int):
         price = await CarAPI.calculate_price(car_id=car_id, colour_id=colour_id, interior_id=interior_id)
 
