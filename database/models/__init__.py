@@ -6,6 +6,8 @@ from .Car import Car
 from .CarColour import CarColour
 from .CarInterior import CarInterior
 from .OrderStatus import OrderStatus
+from .Employee import Employee
+from .EmployeePosition import EmployeePosition
 from .Order import Order
 
 async def create_order_statuses():
