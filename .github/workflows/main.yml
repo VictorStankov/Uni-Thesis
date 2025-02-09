@@ -48,7 +48,6 @@ jobs:
 
       - name: Execute application
         run: |
-          whoami
           cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
           source venv/bin/activate
           RUNNER_TRACKING_ID=""
