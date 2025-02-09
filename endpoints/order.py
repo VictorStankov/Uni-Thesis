@@ -18,7 +18,7 @@ async def get_order_by_id(user: User, order_id: int):
     order = await OrderAPI.get_order(order_id)
 
     if await order.order_placer != user:
-        return {'message': f'You are not authorized to order {order_id}'}, 403
+        return {'message': f'You are not authorized to view order {order_id}'}, 403
 
     return await order.to_dict(), 200
 

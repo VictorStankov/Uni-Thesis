@@ -1,4 +1,4 @@
-from database import Car, CarColour, CarInterior
+from . import Car, CarColour, CarInterior
 
 
 class CarAPI:

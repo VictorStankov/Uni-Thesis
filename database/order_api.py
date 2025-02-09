@@ -1,4 +1,4 @@
-from database import Order, CarAPI, OrderStatus
+from . import Order, CarAPI, OrderStatus
 
 
 class OrderAPI:
@@ -13,6 +13,10 @@ class OrderAPI:
     @staticmethod
     async def get_user_orders(user_id: int):
         return await Order.filter(order_placer=user_id).all()
+
+    @staticmethod
+    async def get_employee_orders(employee_id: int):
+        return await Order.filter(employee_id=employee_id).all()
 
     @staticmethod
     async def create_order(car_id: int, colour_id: int, interior_id: int, user_id: int):

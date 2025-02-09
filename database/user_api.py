@@ -3,7 +3,7 @@ from typing import List
 import bcrypt
 
 from application.exceptions import UserNotFoundException, UserAlreadyExistsException
-from database.models import User, UserBasicInfo
+from . import User, UserBasicInfo
 
 
 class UserAPI:
