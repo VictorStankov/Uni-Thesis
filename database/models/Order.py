@@ -36,7 +36,7 @@ class Order(Model):
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
             'status': (await self.status).to_dict(),
-            'employee': (await self.employee).to_dict() if self.employee else {},  # FIXME
+            'employee': await (await self.employee).to_dict() if self.employee else {},  # FIXME
         }
 
     class Meta:
