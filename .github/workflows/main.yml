@@ -48,7 +48,7 @@ jobs:
 
       - name: Execute application
         run: |
-          cp /home/victor/.project_configs/thesis_config.cfg ./config.cfg
+          cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
           source venv/bin/activate
           RUNNER_TRACKING_ID=""
           timeout --preserve-status 15s hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log
@@ -65,7 +65,7 @@ jobs:
       # Run hypercorn server
       - name: Run hypercorn
         run: |
-          cp /home/victor/.project_configs/thesis_config.cfg ./config.cfg
+          cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
           source venv/bin/activate
           RUNNER_TRACKING_ID=""
           hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log &
