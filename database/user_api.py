@@ -3,7 +3,7 @@ from typing import List
 import bcrypt
 
 from application.exceptions import UserNotFoundException, UserAlreadyExistsException
-from . import User, UserBasicInfo
+from . import User, UserBasicInfo, Employee
 
 
 class UserAPI:
@@ -13,11 +13,19 @@ class UserAPI:
 
     @staticmethod
     async def get_user_by_id(user_id: int) -> User:
-        return await User.filter(id=user_id).only('id', 'username').first()
+        return await User.filter(id=user_id).only('id', 'username').get_or_none()
 
     @staticmethod
     async def get_user_by_username(username: str) -> User:
-        return await User.filter(username=username).only('id', 'username').first()
+        return await User.filter(username=username).only('id', 'username').get_or_none()
+
+    @staticmethod
+    async def is_user_employee(username: str) -> bool:
+        return await Employee.filter(user__username=username).exists()
+
+    @staticmethod
+    async def get_employee_by_username(username: str) -> Employee:
+        return await Employee.filter(user__username=username).get_or_none()
 
     @staticmethod
     async def get_user_info(user: User) -> UserBasicInfo:
