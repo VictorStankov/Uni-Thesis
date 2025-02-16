@@ -6,6 +6,7 @@ from database import OrderAPI, CarAPI
 from .helpers import login_required
 
 from .models import OrderSchema
+from application.exceptions import NoEmployeesFoundOrderException
 
 order_blueprint = Blueprint('order', __name__)
 
@@ -52,11 +53,14 @@ async def create_order(user: User):
     if not await CarAPI.car_configuration_exists(result['car_id'], result['colour_id'], result['interior_id']):
         return {'message': f'Car configuration does not exist!'}, 404
 
-    id = await OrderAPI.create_order(
-        car_id=result['car_id'],
-        colour_id=result['colour_id'],
-        interior_id=result['interior_id'],
-        user_id=user.id
-    )
+    try:
+        id = await OrderAPI.create_order(
+            car_id=result['car_id'],
+            colour_id=result['colour_id'],
+            interior_id=result['interior_id'],
+            user_id=user.id
+        )
+    except NoEmployeesFoundOrderException as e:
+        return {'message': e.message}, 500
 
     return {'message': 'Order created successfully!', 'id': id}, 200

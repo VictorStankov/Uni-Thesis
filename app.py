@@ -1,8 +1,9 @@
 import os
 
+from quart import send_from_directory
+
 import endpoints
 from application import app
-from quart import send_from_directory
 
 app.register_blueprint(endpoints.authentication, url_prefix='/api')
 app.register_blueprint(endpoints.car_blueprint, url_prefix='/api')
