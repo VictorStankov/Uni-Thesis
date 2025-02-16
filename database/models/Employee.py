@@ -4,7 +4,7 @@ from tortoise.models import Model
 
 class Employee(Model):
     id = fields.IntField(pk=True)
-    user = fields.ForeignKeyField('models.User')
+    user = fields.OneToOneField('models.User')
     position = fields.ForeignKeyField('models.EmployeePosition')
     manager = fields.ForeignKeyField('models.Employee', related_name='employees', related_query_name='employees', null=True)
 
