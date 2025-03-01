@@ -16,7 +16,6 @@ class Employee(Model):
             'id': self.id,
             'user': (await self.user).username,
             'position': (await self.position).to_dict(),
-            'manager': (await self.manager).to_dict() if self.manager else {},
         }
 
 
