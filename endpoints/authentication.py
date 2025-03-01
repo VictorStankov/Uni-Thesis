@@ -52,7 +52,8 @@ async def login():
     return {
         'token_type': 'Bearer',
         'expires_in': 14400,
-        'access_token': await generate_token(result['username'])
+        'access_token': await generate_token(result['username']),
+        'is_employee': await UserAPI.is_user_employee(result['username'])
     }, 200
 
 
