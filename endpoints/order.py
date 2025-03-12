@@ -2,7 +2,7 @@ from marshmallow import ValidationError
 from quart import Blueprint, request
 
 from database import User, Employee
-from database import OrderAPI, CarAPI
+from database import OrderAPI, CarAPI, UserAPI
 from .helpers import login_required, employee_login_required
 
 from .models import OrderSchema
@@ -48,7 +48,9 @@ async def get_employee_orders(employee: Employee):
             {
                 'id': order.id,
                 'car': (await order.car).to_dict(),
-                'status': (await order.status).to_dict()
+                'status': (await order.status).to_dict(),
+                'created_on': order.created_at.strftime('%Y-%m-%d'),
+                'user': (await UserAPI.get_user_info(await order.order_placer)).to_dict(),
             } for order in orders
         ]
     }, 200  # FIXME
