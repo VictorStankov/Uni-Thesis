@@ -1,10 +1,10 @@
 import {useNavigate} from "react-router-dom";
 
-export default function Order(props) {
+export default function OrderListItem(props) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/order/' + props.id)
+        navigate('/employee_orders/' + props.id)
     }
 
     return (
