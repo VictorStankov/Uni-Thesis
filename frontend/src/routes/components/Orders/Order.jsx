@@ -4,7 +4,7 @@ export default function Order(props) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/order/' + props.key)
+        navigate('/order/' + props.id)
     }
 
     return (
