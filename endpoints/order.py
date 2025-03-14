@@ -55,6 +55,28 @@ async def get_employee_orders(employee: Employee):
         ]
     }, 200  # FIXME
 
+@order_blueprint.route('/employee/order/<order_id>', methods=['GET'])
+@employee_login_required
+async def get_employee_order(employee: Employee, order_id: int):
+    if not await OrderAPI.order_exists(order_id):
+        return {'message': f'No order found for ID {order_id}'}, 404
+
+    order = await OrderAPI.get_order(order_id)
+
+    if await order.employee != employee:
+        return {'message': f'You are not authorized to view order {order_id}'}, 403
+
+    return {
+        'id': order.id,
+        'car': (await order.car).to_dict(),
+        'interior': (await order.interior).to_dict(),
+        'colour': (await order.colour).to_dict(),
+        'status': (await order.status).to_dict(),
+        'created_on': order.created_at.strftime('%Y-%m-%d'),
+        'user': (await UserAPI.get_user_info(await order.order_placer)).to_dict(),
+        'price': order.price,
+    }, 200  # FIXME
+
 @order_blueprint.route('/orders', methods=['POST'])
 @login_required
 async def create_order(user: User):
