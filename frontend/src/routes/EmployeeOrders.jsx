@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {authFetch} from "../auth.jsx";
-import Card from "./components/Orders/Order.jsx"
-import Config from "./components/Catalogue/Config.jsx";
+import Card from "./components/EmployeeOrders/OrderListItem.jsx"
+import OrderDetails from "./components/EmployeeOrders/OrderDetails.jsx";
 
 export default function EmployeeOrdersList() {
-    const {itemName} = useParams()
+    const {id} = useParams()
 
     return (
-        itemName === undefined ? <List/> : <Config name={itemName}/>
+        id === undefined ? <List/> : <OrderDetails id={id}/>
     )
 }
 
