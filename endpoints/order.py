@@ -1,9 +1,9 @@
 from marshmallow import ValidationError
 from quart import Blueprint, request
 
-from database import User
-from database import OrderAPI, CarAPI
-from .helpers import login_required
+from database import User, Employee
+from database import OrderAPI, CarAPI, UserAPI
+from .helpers import login_required, employee_login_required
 
 from .models import OrderSchema
 from application.exceptions import NoEmployeesFoundOrderException
@@ -17,8 +17,9 @@ async def get_order_by_id(user: User, order_id: int):
         return {'message': f'No order found for ID {order_id}'}, 404
 
     order = await OrderAPI.get_order(order_id)
+    employee = await Employee.get_or_none(user=user)
 
-    if await order.order_placer != user:
+    if await order.order_placer != user and await order.employee != employee:
         return {'message': f'You are not authorized to view order {order_id}'}, 403
 
     return await order.to_dict(), 200
@@ -35,6 +36,45 @@ async def get_user_orders(user: User):
                 'status': (await order.status).to_dict()
             } for order in orders
         ]
+    }, 200  # FIXME
+
+
+@order_blueprint.route('/employee/orders', methods=['GET'])
+@employee_login_required
+async def get_employee_orders(employee: Employee):
+    orders = await OrderAPI.get_employee_orders(employee.id)
+    return {
+        'orders': [
+            {
+                'id': order.id,
+                'car': (await order.car).to_dict(),
+                'status': (await order.status).to_dict(),
+                'created_on': order.created_at.strftime('%Y-%m-%d'),
+                'user': (await UserAPI.get_user_info(await order.order_placer)).to_dict(),
+            } for order in orders
+        ]
+    }, 200  # FIXME
+
+@order_blueprint.route('/employee/order/<order_id>', methods=['GET'])
+@employee_login_required
+async def get_employee_order(employee: Employee, order_id: int):
+    if not await OrderAPI.order_exists(order_id):
+        return {'message': f'No order found for ID {order_id}'}, 404
+
+    order = await OrderAPI.get_order(order_id)
+
+    if await order.employee != employee:
+        return {'message': f'You are not authorized to view order {order_id}'}, 403
+
+    return {
+        'id': order.id,
+        'car': (await order.car).to_dict(),
+        'interior': (await order.interior).to_dict(),
+        'colour': (await order.colour).to_dict(),
+        'status': (await order.status).to_dict(),
+        'created_on': order.created_at.strftime('%Y-%m-%d'),
+        'user': (await UserAPI.get_user_info(await order.order_placer)).to_dict(),
+        'price': order.price,
     }, 200  # FIXME
 
 @order_blueprint.route('/orders', methods=['POST'])

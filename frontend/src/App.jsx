@@ -4,6 +4,7 @@ import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx"
 import Catalogue from "./routes/Catalogue.jsx";
+import EmployeeOrdersList from "./routes/EmployeeOrders.jsx";
 
 export default function App() {
   return (
@@ -14,6 +15,8 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/catalogue" element={<Catalogue/>} />
             <Route path="/catalogue/:itemName" element={<Catalogue/>} />
+            <Route path="/employee_orders" element={<EmployeeOrdersList/>} />
+            <Route path="/employee_orders/:id" element={<EmployeeOrdersList/>} />
             <Route path="*" element={<Home />} />
         </Route>
     </Routes>
@@ -22,6 +25,7 @@ export default function App() {
 
 function Layout() {
     const [loggedIn] = useAuth();
+    const is_employee = localStorage.getItem('is_employee') === 'true'
 
     return (
         <div className="flex flex-col justify-start">
@@ -34,8 +38,15 @@ function Layout() {
                         <Link to="/catalogue">Catalogue</Link>
                     </li>
                     {
+                        is_employee ?
+                            <li className="px-2">
+                                <Link to="/employee_orders">Assigned Orders</Link>
+                            </li> :
+                            null
+                    }
+                    {
                         loggedIn ?
-                            <button onClick={() => logout()}>Log Out</button> :
+                            <button className="px-2" onClick={() => {logout(); localStorage.removeItem('is_employee')}}>Log Out</button> :
                             <li className="px-2">
                                 <Link to="/login">Login</Link>
                             </li>

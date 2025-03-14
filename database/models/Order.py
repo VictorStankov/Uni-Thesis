@@ -36,6 +36,7 @@ class Order(Model):
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
             'status': (await self.status).to_dict(),
+            'order_placer': (await self.order_placer).id,
             'employee': await (await self.employee).to_dict() if self.employee else {},  # FIXME
         }
 

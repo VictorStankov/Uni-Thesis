@@ -12,5 +12,13 @@ class UserBasicInfo(Model):
     def __str__(self):
         return f"email: {self.email}, first_name: {self.first_name}, last_name: {self.last_name}, phone: {self.phone}"
 
+    def to_dict(self):
+        return {
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "phone": self.phone,
+        }
+
     class Meta:
         table = 'user_basic_info'

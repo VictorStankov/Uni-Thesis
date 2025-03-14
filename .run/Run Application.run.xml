@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Application" type="CompoundRunConfigurationType">
+    <toRun name="npm autobuild" type="js.build_tools.npm" />
+    <toRun name="npm dev" type="js.build_tools.npm" />
+    <toRun name="Quart" type="PythonConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
