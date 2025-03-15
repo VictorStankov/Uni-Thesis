@@ -1,7 +1,7 @@
 from marshmallow import ValidationError
 from quart import Blueprint, request
 
-from database import User, Employee
+from database import User, Employee, EmployeeAPI
 from database import OrderAPI, CarAPI, UserAPI
 from .helpers import login_required, employee_login_required
 
@@ -9,20 +9,6 @@ from .models import OrderSchema
 from application.exceptions import NoEmployeesFoundOrderException
 
 order_blueprint = Blueprint('order', __name__)
-
-@order_blueprint.route('/order/<order_id>', methods=['GET'])
-@login_required
-async def get_order_by_id(user: User, order_id: int):
-    if not await OrderAPI.order_exists(order_id):
-        return {'message': f'No order found for ID {order_id}'}, 404
-
-    order = await OrderAPI.get_order(order_id)
-    employee = await Employee.get_or_none(user=user)
-
-    if await order.order_placer != user and await order.employee != employee:
-        return {'message': f'You are not authorized to view order {order_id}'}, 403
-
-    return await order.to_dict(), 200
 
 @order_blueprint.route('/orders', methods=['GET'])
 @login_required
@@ -37,6 +23,28 @@ async def get_user_orders(user: User):
             } for order in orders
         ]
     }, 200  # FIXME
+
+@order_blueprint.route('/order/<order_id>', methods=['GET'])
+@login_required
+async def get_user_order(user: User, order_id: int):
+    if not await OrderAPI.order_exists(order_id):
+        return {'message': f'No order found for ID {order_id}'}, 404
+
+    order = await OrderAPI.get_order(order_id)
+
+    if await order.order_placer != user:
+        return {'message': f'You are not authorized to view order {order_id}'}, 403
+
+    return {
+        'id': order.id,
+        'car': (await order.car).to_dict(),
+        'interior': (await order.interior).to_dict(),
+        'colour': (await order.colour).to_dict(),
+        'status': (await order.status).to_dict(),
+        'created_on': order.created_at.strftime('%Y-%m-%d'),
+        'sales_rep': (await EmployeeAPI.get_employee_info(await order.employee)).to_dict(),
+        'price': order.price,
+    }, 200
 
 
 @order_blueprint.route('/employee/orders', methods=['GET'])
@@ -53,7 +61,7 @@ async def get_employee_orders(employee: Employee):
                 'user': (await UserAPI.get_user_info(await order.order_placer)).to_dict(),
             } for order in orders
         ]
-    }, 200  # FIXME
+    }, 200
 
 @order_blueprint.route('/employee/order/<order_id>', methods=['GET'])
 @employee_login_required
@@ -75,7 +83,7 @@ async def get_employee_order(employee: Employee, order_id: int):
         'created_on': order.created_at.strftime('%Y-%m-%d'),
         'user': (await UserAPI.get_user_info(await order.order_placer)).to_dict(),
         'price': order.price,
-    }, 200  # FIXME
+    }, 200
 
 @order_blueprint.route('/orders', methods=['POST'])
 @login_required
