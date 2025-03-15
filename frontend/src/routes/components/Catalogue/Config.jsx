@@ -36,8 +36,6 @@ export default function Config(props) {
             interior_id: selectedInterior.id
         }
 
-        console.log(body)
-
         if(loggedIn === false) {
             navigate('/login')
         }

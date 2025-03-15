@@ -1,4 +1,4 @@
-from . import Employee
+from . import Employee, UserBasicInfo
 
 
 class EmployeeAPI:
@@ -13,3 +13,7 @@ class EmployeeAPI:
     @staticmethod
     async def get_employee_by_user_id(user_id: int):
         return await Employee.get(user_id=user_id)
+
+    @staticmethod
+    async def get_employee_info(employee: Employee) -> UserBasicInfo:
+        return await UserBasicInfo.filter(user=await employee.user).first()

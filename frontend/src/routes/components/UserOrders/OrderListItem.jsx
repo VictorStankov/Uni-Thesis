@@ -4,7 +4,7 @@ export default function OrderListItem(props) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/employee_order/' + props.id)
+        navigate('/order/' + props.id)
     }
 
     return (
