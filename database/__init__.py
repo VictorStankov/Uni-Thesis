@@ -7,6 +7,7 @@ from .user_api import UserAPI
 from .car_api import CarAPI
 from .order_api import OrderAPI
 from .employee_api import EmployeeAPI
+from .test_drive_api import TestDriveAPI
 
 register_tortoise(
     app=app,
