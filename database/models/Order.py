@@ -3,12 +3,6 @@ from enum import Enum
 from tortoise import fields
 from tortoise.models import Model
 
-class Status(Enum):
-    Ordered = 'Ordered'
-    Paid = 'Paid'
-    Manufactured = 'Manufactured'
-    Shipped = 'Shipped'
-    Completed = 'Completed'
 
 class Order(Model):
     id = fields.IntField(pk=True)
