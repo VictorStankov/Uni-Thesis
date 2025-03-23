@@ -123,7 +123,7 @@ export default function Register() {
         })
             .then(r => {
                     if (r.ok) {
-                        navigate('/')
+                        navigate(-1)
                     }
                     return Promise.reject(r)
                 }
