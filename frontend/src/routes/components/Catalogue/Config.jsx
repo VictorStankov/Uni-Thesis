@@ -14,6 +14,8 @@ export default function Config(props) {
     const [selectedColour, setColour] = useState({price_increase: 0.})
     const [selectedInterior, setInterior] = useState({price_increase: 0.})
 
+    const [testDriveRequested, setTestDriveRequested] = useState(false)
+
     useEffect(() => {
             fetch(`/api/cars/configs/${props.name}`, {
                 method: 'get'
@@ -29,7 +31,7 @@ export default function Config(props) {
                 })
         }, [props.name]);
 
-    const handleSubmit = () => {
+    const handleOrderSubmit = () => {
         const body = {
             car_id: car.id,
             colour_id: selectedColour.id,
@@ -64,6 +66,39 @@ export default function Config(props) {
             })
     }
 
+    const handleTestDriveSubmit = () => {
+        const body = {
+            car_id: car.id
+        }
+
+        if(loggedIn === false) {
+            navigate('/login')
+        }
+
+        authFetch(`/api/test_drives`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+            .then(r => {
+                    if (r.ok) {
+                        setTestDriveRequested(true)
+                    }
+                }
+            )
+            .catch(r => {
+                r.json().then((json) => {
+                    console.log(`${json.message}... Redirecting`) // TODO: Add Error Message
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 3000)
+                    }
+                )
+            })
+    }
+
     return(
         <div className='flex-row flex flex-nowrap'>
             <form className='p-2 flex flex-col'>
@@ -72,7 +107,8 @@ export default function Config(props) {
                 <ul>
                     {carColours.map((colour, index) => (
                         <li key={colour.colour}>
-                            <input defaultChecked={colour.is_base} id="colour" type="radio" name="colour" value={colour.colour} onClick={() => {
+                            <input defaultChecked={colour.is_base} id="colour" type="radio" name="colour"
+                                   value={colour.colour} onClick={() => {
                                 setColour(colour)
                             }}/>
                             <label>{colour.colour}</label>
@@ -84,7 +120,8 @@ export default function Config(props) {
                 <ul>
                     {carInteriors.map((interior, index) => (
                         <li key={interior.interior}>
-                            <input defaultChecked={interior.is_base} id="interior" type="radio" name="interior" value={interior.interior} onClick={() => {
+                            <input defaultChecked={interior.is_base} id="interior" type="radio" name="interior"
+                                   value={interior.interior} onClick={() => {
                                 setInterior(interior)
                             }}/>
                             <label>{interior.interior}</label>
@@ -92,8 +129,11 @@ export default function Config(props) {
                     ))}
                 </ul>
                 <p>{car.base_price === undefined ? "" : car.base_price + selectedColour.price_increase + selectedInterior.price_increase}</p>
-                <button type="button" onClick={handleSubmit}>Submit Order</button>
+                <button type="button" onClick={handleOrderSubmit}>Submit Order</button>
+                <button type="button" onClick={handleTestDriveSubmit}>Request Test Drive</button>
+                <p className='text-green-500'>{testDriveRequested ? "Test Drive requested successfully" : ""}</p>
             </form>
+
             <div className=''>
                 <img className="w-full rounded-lg" src={'/img/' + car.base_image_path} alt="Picture of a car"/>
             </div>
