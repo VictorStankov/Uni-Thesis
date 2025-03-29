@@ -29,6 +29,11 @@ async def get_employee_test_drives(employee: Employee):
 @test_drive_blueprint.route('/employee/test_drive/<test_drive_id>', methods=['GET'])
 @employee_login_required
 async def get_employee_test_drive(employee: Employee, test_drive_id: int):
+    try:
+        test_drive_id = int(test_drive_id)
+    except ValueError:
+        return {'message': 'Invalid test drive ID'}, 400
+
     if not await TestDriveAPI.test_drive_exists(test_drive_id):
         return {'message': f'No test drive found for ID {test_drive_id}'}, 404
 
