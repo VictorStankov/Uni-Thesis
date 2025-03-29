@@ -4,7 +4,7 @@ import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx"
 import Catalogue from "./routes/Catalogue.jsx";
-import EmployeeOrdersList from "./routes/EmployeeOrders.jsx";
+import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
 import OrdersList from "./routes/Orders.jsx";
 
 export default function App() {
@@ -16,8 +16,8 @@ export default function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/catalogue" element={<Catalogue/>}/>
                 <Route path="/catalogue/:itemName" element={<Catalogue/>}/>
-                <Route path="/employee_orders" element={<EmployeeOrdersList/>}/>
-                <Route path="/employee_order/:id" element={<EmployeeOrdersList/>}/>
+                <Route path="/employee_orders" element={<EmployeeTasksList/>}/>
+                <Route path="/employee_order/:id" element={<EmployeeTasksList/>}/>
                 <Route path="/orders" element={<OrdersList/>}/>
                 <Route path="/order/:id" element={<OrdersList/>}/>
                 <Route path="*" element={<Home/>}/>

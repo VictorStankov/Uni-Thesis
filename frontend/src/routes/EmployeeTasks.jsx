@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {authFetch} from "../auth.jsx";
-import Card from "./components/EmployeeOrders/OrderListItem.jsx"
-import OrderDetails from "./components/EmployeeOrders/OrderDetails.jsx";
+import Card from "./components/EmployeeTasks/OrderListItem.jsx"
+import OrderDetails from "./components/EmployeeTasks/OrderDetails.jsx";
 
-export default function EmployeeOrdersList() {
+export default function EmployeeTasksList() {
     const {id} = useParams()
 
     return (

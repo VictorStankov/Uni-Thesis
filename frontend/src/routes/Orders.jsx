@@ -41,7 +41,7 @@ function List() {
             <div className='mt-16 flex-grow'>
                 <ul className='flex-col items-center flex-grow'>
                     {orders.map((item, index) => (
-                        <Card className='flex-grow' key={item.id} id={item.id} car_img={item.car.base_image_path} car_name={item.car.name} price={item.car.base_price} status={item.status.name} created_on={item.created_on}/>
+                        <Card className='flex-grow' key={"item.id"} id={item.id} car_img={item.car.base_image_path} car_name={item.car.name} price={item.car.base_price} status={item.status.name} created_on={item.created_on}/>
                     ))}
                 </ul>
             </div>
