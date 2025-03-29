@@ -6,6 +6,7 @@ import Register from "./routes/Register.jsx"
 import Catalogue from "./routes/Catalogue.jsx";
 import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
 import OrdersList from "./routes/Orders.jsx";
+import OrderDetails from "./routes/components/EmployeeTasks/OrderDetails.jsx";
 
 export default function App() {
     return (
@@ -17,7 +18,7 @@ export default function App() {
                 <Route path="/catalogue" element={<Catalogue/>}/>
                 <Route path="/catalogue/:itemName" element={<Catalogue/>}/>
                 <Route path="/employee_orders" element={<EmployeeTasksList/>}/>
-                <Route path="/employee_order/:id" element={<EmployeeTasksList/>}/>
+                <Route path="/employee_order/:id" element={<OrderDetails/>}/>
                 <Route path="/orders" element={<OrdersList/>}/>
                 <Route path="/order/:id" element={<OrdersList/>}/>
                 <Route path="*" element={<Home/>}/>
