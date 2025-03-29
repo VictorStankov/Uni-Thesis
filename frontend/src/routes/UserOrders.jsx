@@ -1,18 +1,9 @@
 import {useEffect, useState} from "react";
-import {useParams, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {authFetch} from "../auth.jsx";
-import Card from "./components/UserOrders/OrderListItem.jsx"
-import OrderDetails from "./components/UserOrders/OrderDetails.jsx"
+import Card from "./components/UserOrders/UserOrderListItem.jsx"
 
 export default function OrdersList() {
-    const {id} = useParams()
-
-    return (
-        id === undefined ? <List/> : <OrderDetails id={id}/>
-    )
-}
-
-function List() {
     const [orders, setOrders] = useState([])
 
     const navigate = useNavigate();

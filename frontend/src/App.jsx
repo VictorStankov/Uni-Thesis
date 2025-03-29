@@ -4,8 +4,9 @@ import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx"
 import Catalogue from "./routes/Catalogue.jsx";
+import OrdersList from "./routes/UserOrders.jsx";
+import UserOrderDetails from "./routes/components/UserOrders/UserOrderDetails.jsx";
 import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
-import OrdersList from "./routes/Orders.jsx";
 import EmployeeOrderDetails from "./routes/components/EmployeeTasks/Orders/EmployeeOrderDetails.jsx";
 import EmployeeTestDriveDetails from "./routes/components/EmployeeTasks/TestDrives/EmployeeTestDriveDetails.jsx";
 
@@ -22,7 +23,7 @@ export default function App() {
                 <Route path="/employee_order/:id" element={<EmployeeOrderDetails/>}/>
                 <Route path="/employee_test_drive/:id" element={<EmployeeTestDriveDetails/>}/>
                 <Route path="/orders" element={<OrdersList/>}/>
-                <Route path="/order/:id" element={<OrdersList/>}/>
+                <Route path="/order/:id" element={<UserOrderDetails/>}/>
                 <Route path="*" element={<Home/>}/>
             </Route>
         </Routes>

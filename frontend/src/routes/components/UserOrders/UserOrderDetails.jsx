@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
 import {authFetch} from "../../../auth.jsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
-export default function UserOrderDetails(props) {
+export default function UserOrderDetails() {
     const navigate = useNavigate()
+    const { id } = useParams();
 
     const [response, setResponse] = useState({})
 
     useEffect(() => {
-            authFetch(`/api/order/${props.id}`, {
+            authFetch(`/api/order/${id}`, {
                 method: 'get'
             })
                 .then(r => {
