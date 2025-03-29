@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 
-export default function OrderListItem(props) {
+export default function UserOrderListItem(props) {
     const navigate = useNavigate()
 
     const handleClick = () => {

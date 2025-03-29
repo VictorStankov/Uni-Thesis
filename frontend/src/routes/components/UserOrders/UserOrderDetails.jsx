@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {authFetch} from "../../../auth.jsx";
 import {useNavigate} from "react-router-dom";
 
-export default function OrderDetails(props) {
+export default function UserOrderDetails(props) {
     const navigate = useNavigate()
 
     const [response, setResponse] = useState({})
