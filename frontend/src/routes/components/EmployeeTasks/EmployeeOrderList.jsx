@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authFetch} from "../../../auth.jsx";
-import Card from "./OrderListItem.jsx";
+import Card from "./EmployeeOrderListItem.jsx";
 
-export default function EmployeeOrdersList() {
+export default function EmployeeOrderList() {
     const [orders, setOrders] = useState([])
 
     const navigate = useNavigate();

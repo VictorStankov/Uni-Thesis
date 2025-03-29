@@ -1,8 +1,8 @@
-import EmployeeOrdersList from "./components/EmployeeTasks/OrderList.jsx";
+import EmployeeOrderList from "./components/EmployeeTasks/EmployeeOrderList.jsx";
 
 export default function EmployeeTasksList() {
 
     return (
-        <EmployeeOrdersList/>
+        <EmployeeOrderList/>
     )
 }
