@@ -6,8 +6,8 @@ import Register from "./routes/Register.jsx"
 import Catalogue from "./routes/Catalogue.jsx";
 import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
 import OrdersList from "./routes/Orders.jsx";
-import EmployeeOrderDetails from "./routes/components/EmployeeTasks/EmployeeOrderDetails.jsx";
-import EmployeeTestDriveDetails from "./routes/components/EmployeeTasks/EmployeeTestDriveDetails.jsx";
+import EmployeeOrderDetails from "./routes/components/EmployeeTasks/Orders/EmployeeOrderDetails.jsx";
+import EmployeeTestDriveDetails from "./routes/components/EmployeeTasks/TestDrives/EmployeeTestDriveDetails.jsx";
 
 export default function App() {
     return (

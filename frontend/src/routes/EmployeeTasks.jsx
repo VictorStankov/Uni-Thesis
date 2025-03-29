@@ -1,5 +1,5 @@
-import EmployeeOrderList from "./components/EmployeeTasks/EmployeeOrderList.jsx";
-import EmployeeTestDriveList from "./components/EmployeeTasks/EmployeeTestDriveList.jsx";
+import EmployeeOrderList from "./components/EmployeeTasks/Orders/EmployeeOrderList.jsx";
+import EmployeeTestDriveList from "./components/EmployeeTasks/TestDrives/EmployeeTestDriveList.jsx";
 
 export default function EmployeeTasksList() {
 

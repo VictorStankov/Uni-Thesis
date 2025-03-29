@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {authFetch} from "../../../auth.jsx";
+import {authFetch} from "../../../../auth.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 
 export default function EmployeeOrderDetails() {
