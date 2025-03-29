@@ -4,7 +4,7 @@ export default function EmployeeTestDriveListItem(props) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/test_drive/' + props.id)
+        navigate('/employee_test_drive/' + props.id)
     }
 
     return (

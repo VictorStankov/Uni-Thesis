@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authFetch} from "../../../auth.jsx";
-import Card from "./EmployeeOrderListItem.jsx";
+import Card from "./EmployeeTestDriveListItem.jsx";
 
 export default function EmployeeTestDriveList() {
     const [testDrives, setTestDrives] = useState([])
