@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
-import {authFetch} from "../../../auth.jsx";
-import {useNavigate} from "react-router-dom";
+import {authFetch} from "../../../../auth.jsx";
+import {useNavigate, useParams} from "react-router-dom";
 
-export default function OrderDetails(props) {
+export default function EmployeeTestDriveDetails() {
     const navigate = useNavigate()
+    const { id } = useParams();
 
     const [response, setResponse] = useState({})
 
     useEffect(() => {
-            authFetch(`/api/employee/order/${props.id}`, {
+            authFetch(`/api/employee/test_drive/${id}`, {
                 method: 'get'
             })
                 .then(r => {
@@ -21,7 +22,7 @@ export default function OrderDetails(props) {
                 })
                 .catch(reason => {
                     console.log(reason)
-                    navigate('/employee_orders')
+                    navigate('/employee_tasks')
                 })
         }, []);
 
@@ -34,8 +35,6 @@ export default function OrderDetails(props) {
             </div>
             <div className='flex flex-col'>
                 <p>{response?.car?.name}</p>
-                <p>{response?.price}</p>
-                <p>{response?.colour?.colour} {response?.interior?.interior}</p>
                 <p>{response?.status?.name}</p>
                 <p>{response?.user?.first_name} {response?.user?.last_name}</p>
                 <div className='flex flex-row'>

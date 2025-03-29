@@ -1,10 +1,10 @@
 import {useNavigate} from "react-router-dom";
 
-export default function OrderListItem(props) {
+export default function EmployeeTestDriveListItem(props) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/order/' + props.id)
+        navigate('/employee_test_drive/' + props.id)
     }
 
     return (
@@ -20,9 +20,6 @@ export default function OrderListItem(props) {
                         </p>
                         <p className="text-gray-700 text-base">
                             {props.status}
-                        </p>
-                        <p className="text-gray-700 text-base">
-                            {props.price}
                         </p>
                         <p className="text-gray-700 text-base">
                             {props.created_on}

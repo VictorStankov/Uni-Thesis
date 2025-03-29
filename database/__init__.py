@@ -7,6 +7,7 @@ from .user_api import UserAPI
 from .car_api import CarAPI
 from .order_api import OrderAPI
 from .employee_api import EmployeeAPI
+from .test_drive_api import TestDriveAPI
 
 register_tortoise(
     app=app,
@@ -24,4 +25,5 @@ register_tortoise(
 @app.before_serving
 async def startup():
     await OrderStatus.create_order_statuses()
+    await TestDriveStatus.create_test_drive_statuses()
     await EmployeePosition.create_employee_positions()

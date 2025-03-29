@@ -4,8 +4,11 @@ import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx"
 import Catalogue from "./routes/Catalogue.jsx";
-import EmployeeOrdersList from "./routes/EmployeeOrders.jsx";
-import OrdersList from "./routes/Orders.jsx";
+import OrdersList from "./routes/UserOrders.jsx";
+import UserOrderDetails from "./routes/components/UserOrders/UserOrderDetails.jsx";
+import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
+import EmployeeOrderDetails from "./routes/components/EmployeeTasks/Orders/EmployeeOrderDetails.jsx";
+import EmployeeTestDriveDetails from "./routes/components/EmployeeTasks/TestDrives/EmployeeTestDriveDetails.jsx";
 
 export default function App() {
     return (
@@ -16,10 +19,11 @@ export default function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/catalogue" element={<Catalogue/>}/>
                 <Route path="/catalogue/:itemName" element={<Catalogue/>}/>
-                <Route path="/employee_orders" element={<EmployeeOrdersList/>}/>
-                <Route path="/employee_order/:id" element={<EmployeeOrdersList/>}/>
+                <Route path="/employee_tasks" element={<EmployeeTasksList/>}/>
+                <Route path="/employee_order/:id" element={<EmployeeOrderDetails/>}/>
+                <Route path="/employee_test_drive/:id" element={<EmployeeTestDriveDetails/>}/>
                 <Route path="/orders" element={<OrdersList/>}/>
-                <Route path="/order/:id" element={<OrdersList/>}/>
+                <Route path="/order/:id" element={<UserOrderDetails/>}/>
                 <Route path="*" element={<Home/>}/>
             </Route>
         </Routes>
@@ -49,7 +53,7 @@ function Layout() {
                             loggedIn ?
                                 is_employee ?
                                     <li className="px-2">
-                                        <Link to="/employee_orders">Assigned Orders</Link>
+                                        <Link to="/employee_tasks">Assigned Tasks</Link>
                                     </li> :
                                     <li className="px-2">
                                         <Link to="/orders">Orders</Link>

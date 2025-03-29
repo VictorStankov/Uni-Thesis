@@ -1,24 +1,15 @@
 import {useEffect, useState} from "react";
-import {useParams, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {authFetch} from "../auth.jsx";
-import Card from "./components/EmployeeOrders/OrderListItem.jsx"
-import OrderDetails from "./components/EmployeeOrders/OrderDetails.jsx";
+import Card from "./components/UserOrders/UserOrderListItem.jsx"
 
-export default function EmployeeOrdersList() {
-    const {id} = useParams()
-
-    return (
-        id === undefined ? <List/> : <OrderDetails id={id}/>
-    )
-}
-
-function List() {
+export default function OrdersList() {
     const [orders, setOrders] = useState([])
 
     const navigate = useNavigate();
 
     useEffect(() => {
-            authFetch(`/api/employee/orders`, {
+            authFetch(`/api/orders`, {
                 method: 'get'
             })
                 .then(r => {
@@ -41,7 +32,7 @@ function List() {
             <div className='mt-16 flex-grow'>
                 <ul className='flex-col items-center flex-grow'>
                     {orders.map((item, index) => (
-                        <Card className='flex-grow' key={item.id} id={item.id} car_img={item.car.base_image_path} car_name={item.car.name} price={item.car.base_price} status={item.status.name} created_on={item.created_on} order_placer={item.user.email}/>
+                        <Card className='flex-grow' key={"item.id"} id={item.id} car_img={item.car.base_image_path} car_name={item.car.name} price={item.car.base_price} status={item.status.name} created_on={item.created_on}/>
                     ))}
                 </ul>
             </div>

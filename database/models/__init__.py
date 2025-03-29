@@ -7,3 +7,5 @@ from .OrderStatus import OrderStatus
 from .Employee import Employee
 from .EmployeePosition import EmployeePosition
 from .Order import Order
+from .TestDriveStatus import TestDriveStatus
+from .TestDrive import TestDrive

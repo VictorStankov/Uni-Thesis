@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
-import {authFetch} from "../../../auth.jsx";
-import {useNavigate} from "react-router-dom";
+import {authFetch} from "../../../../auth.jsx";
+import {useNavigate, useParams} from "react-router-dom";
 
-export default function OrderDetails(props) {
+export default function EmployeeOrderDetails() {
     const navigate = useNavigate()
+    const { id } = useParams();
 
     const [response, setResponse] = useState({})
 
     useEffect(() => {
-            authFetch(`/api/order/${props.id}`, {
+            authFetch(`/api/employee/order/${id}`, {
                 method: 'get'
             })
                 .then(r => {
@@ -21,7 +22,7 @@ export default function OrderDetails(props) {
                 })
                 .catch(reason => {
                     console.log(reason)
-                    navigate('/orders')
+                    navigate('/employee_tasks')
                 })
         }, []);
 
@@ -37,10 +38,10 @@ export default function OrderDetails(props) {
                 <p>{response?.price}</p>
                 <p>{response?.colour?.colour} {response?.interior?.interior}</p>
                 <p>{response?.status?.name}</p>
-                <p>{response?.sales_rep?.first_name} {response?.sales_rep?.last_name}</p>
+                <p>{response?.user?.first_name} {response?.user?.last_name}</p>
                 <div className='flex flex-row'>
-                    <a className='px-2' href={'mailto:' + response?.sales_rep?.email}>Email</a>
-                    <a className='px-2' href={'tel:' + response?.sales_rep?.phone}>Call</a>
+                    <a className='px-2' href={'mailto:' + response?.user?.email}>Email</a>
+                    <a className='px-2' href={'tel:' + response?.user?.phone}>Call</a>
                 </div>
             </div>
         </div>
