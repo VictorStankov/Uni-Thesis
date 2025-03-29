@@ -22,7 +22,7 @@ export default function EmployeeTestDriveDetails() {
                 })
                 .catch(reason => {
                     console.log(reason)
-                    navigate('/employee_orders')
+                    navigate('/employee_tasks')
                 })
         }, []);
 
