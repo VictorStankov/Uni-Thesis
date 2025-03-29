@@ -26,12 +26,22 @@ async def get_car_configs(car_name: str):
 
 
 @car_blueprint.route('/cars/<car_id>/colours', methods=['GET'])
-async def get_car_colours(car_id: int):
+async def get_car_colours(car_id: str):
+    try:
+        car_id = int(car_id)
+    except ValueError:
+        return {'message': 'Invalid car ID'}, 400
+
     colours = await CarAPI.get_car_colour(car_id)
     return {'car_colours': [car_colour.to_dict() for car_colour in colours]}
 
 
 @car_blueprint.route('/cars/<car_id>/interiors', methods=['GET'])
 async def get_car_interiors(car_id: int):
+    try:
+        car_id = int(car_id)
+    except ValueError:
+        return {'message': 'Invalid car ID'}, 400
+
     interiors = await CarAPI.get_car_interior(car_id)
     return {'interiors': [interior.to_dict() for interior in interiors]}
