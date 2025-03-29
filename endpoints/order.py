@@ -27,6 +27,11 @@ async def get_user_orders(user: User):
 @order_blueprint.route('/order/<order_id>', methods=['GET'])
 @login_required
 async def get_user_order(user: User, order_id: int):
+    try:
+        order_id = int(order_id)
+    except ValueError:
+        return {'message': 'Invalid order ID'}, 400
+
     if not await OrderAPI.order_exists(order_id):
         return {'message': f'No order found for ID {order_id}'}, 404
 
@@ -66,6 +71,11 @@ async def get_employee_orders(employee: Employee):
 @order_blueprint.route('/employee/order/<order_id>', methods=['GET'])
 @employee_login_required
 async def get_employee_order(employee: Employee, order_id: int):
+    try:
+        order_id = int(order_id)
+    except ValueError:
+        return {'message': 'Invalid order ID'}, 400
+
     if not await OrderAPI.order_exists(order_id):
         return {'message': f'No order found for ID {order_id}'}, 404
 
