@@ -56,16 +56,10 @@ def login_required(f: Callable) -> Callable:
 
 
 async def verify_employee() -> Union[Employee, None]:
-    authorization_header = request.headers.get('Authorization')
-
-    if not authorization_header:
-        log.debug(f'Authorization header is missing')
-        return None
+    user = await verify_user()
 
     try:
-        decoded_token = jwt.decode(authorization_header.replace('Bearer ', ''), str(app.secret_key), algorithms='HS512')
-
-        return await UserAPI.get_employee_by_username(decoded_token['sub'])
+        return await UserAPI.get_employee_by_username(user.username)
     except Exception as e:
         print(e)
         log.debug(f'Employee Token verification failed: {e}')
@@ -77,6 +71,18 @@ def employee_login_required(f: Callable) -> Callable:
         employee = await verify_employee()
 
         if not employee:
+            return {'message': 'Unauthorized'}, 401
+
+        return await f(*args, employee, **kwargs)
+
+    return decorated_function
+
+def manager_login_required(f: Callable) -> Callable:
+    @wraps(f)
+    async def decorated_function(*args, **kwargs):
+        employee = await verify_employee()
+
+        if not employee or not await UserAPI.is_user_manager((await employee.user).username):
             return {'message': 'Unauthorized'}, 401
 
         return await f(*args, employee, **kwargs)
