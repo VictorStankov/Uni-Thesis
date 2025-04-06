@@ -5,9 +5,9 @@ from endpoints.helpers.authentication import employee_login_required
 
 statistics_blueprint = Blueprint('statistics', __name__)
 
-@statistics_blueprint.route('/employee_order_statistics', methods=['GET'])
+@statistics_blueprint.route('/me/order_statistics', methods=['GET'])
 @employee_login_required
-async def get_employee_order_statistics(employee: Employee):
+async def get_self_order_statistics(employee: Employee):
     orders = await OrderAPI.get_employee_orders(employee.id)
 
     results = {}

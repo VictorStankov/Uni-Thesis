@@ -6,7 +6,7 @@ export default function EmployeeStatistics() {
     const [response, setResponse] = useState([])
 
     useEffect(() => {
-        authFetch(`/api/employee_order_statistics`, {
+        authFetch(`/api/me/order_statistics`, {
             method: 'get'
         })
             .then(r => {
