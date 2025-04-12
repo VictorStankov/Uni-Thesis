@@ -1,3 +1,5 @@
+from typing import List
+
 from . import Employee, UserBasicInfo
 
 
@@ -17,3 +19,7 @@ class EmployeeAPI:
     @staticmethod
     async def get_employee_info(employee: Employee) -> UserBasicInfo:
         return await UserBasicInfo.filter(user=await employee.user).first()
+
+    @staticmethod
+    async def get_manager_employees(employee: Employee) -> List[Employee]:
+        return await Employee.filter(manager=employee).all()
