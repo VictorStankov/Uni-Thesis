@@ -49,3 +49,10 @@ async def get_employee_order_statistics(employee: Employee):
     response = {'data': results, 'order_statuses': [status.name for status in order_statuses]}
 
     return response
+
+@statistics_blueprint.route('/monthly_order_statistics', methods=['GET'])
+@manager_login_required
+async def get_monthly_order_statistics(employee: Employee):
+    monthly_order_counts = await OrderAPI.get_monthly_order_counts()
+
+    return [{'period': month_count.date, 'count': month_count.count} for month_count in monthly_order_counts]
