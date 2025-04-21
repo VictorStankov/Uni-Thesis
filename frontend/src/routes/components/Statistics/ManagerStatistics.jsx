@@ -42,7 +42,6 @@ export default function ManagerStatistics() {
             <div className='grid grid-cols-1 justify-center'>
                 <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
                 <BarChart
-                    className='w-full items-center justify-center'
                     dataset={employeeData}
                     yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
                     grid={{ vertical: true }}
