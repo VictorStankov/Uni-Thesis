@@ -64,6 +64,13 @@ function Layout() {
                                 null
                         }
                         {
+                            loggedIn && is_employee ?
+                                    <li className="px-2">
+                                        <Link to="/statistics">Statistics</Link>
+                                    </li> :
+                                null
+                        }
+                        {
                             loggedIn ?
                                 <button className="px-2" onClick={() => {
                                     logout();
