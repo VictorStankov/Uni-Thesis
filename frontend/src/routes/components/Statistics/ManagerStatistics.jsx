@@ -1,6 +1,6 @@
 import {authFetch} from "../../../auth.jsx";
 import {useEffect, useState} from "react";
-import {BarChart, cheerfulFiestaPalette} from "@mui/x-charts";
+import {BarChart, cheerfulFiestaPalette, ResponsiveChartContainer} from "@mui/x-charts";
 import {Button} from "@mui/material";
 
 export default function ManagerStatistics() {
@@ -38,18 +38,21 @@ export default function ManagerStatistics() {
         }, []);
 
     return(
-        <div className='w-full'>
-            <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
-            <BarChart
-                dataset={employeeData}
-                yAxis={[{ scaleType: 'band', dataKey: 'email' }]}
-                grid={{ vertical: true }}
-                series={statuses.filter((status) => status.dataKey !== 'Completed' || toggleCompleted)}
-                width={600}
-                height={400}
-                layout="horizontal"
-                colors={cheerfulFiestaPalette}
-            />
+        <div className='grid grid-cols-2 w-full'>
+            <div className='grid grid-cols-1 justify-center'>
+                <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
+                <BarChart
+                    className='w-full items-center justify-center'
+                    dataset={employeeData}
+                    yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
+                    grid={{ vertical: true }}
+                    series={statuses.filter((status) => status.dataKey !== 'Completed' || toggleCompleted)}
+                    layout="horizontal"
+                    height={employeeData.length * 100}
+                    colors={cheerfulFiestaPalette}
+                    margin={{left: 170}}
+                />
+            </div>
         </div>
     )
 }
