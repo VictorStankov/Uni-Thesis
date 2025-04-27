@@ -4,6 +4,8 @@ from database import Employee, OrderAPI, EmployeeAPI
 from endpoints.helpers import manager_login_required
 from endpoints.helpers.authentication import employee_login_required
 
+import pandas as pd
+
 statistics_blueprint = Blueprint('statistics', __name__)
 
 @statistics_blueprint.route('/me/order_statistics', methods=['GET'])

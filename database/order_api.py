@@ -35,7 +35,8 @@ class OrderAPI:
                 date=Extract_test('created_at', '%Y-%m'),
                 count=Count('id')
             )
-            .group_by('date')
+            .group_by('period')
+            .values('period', 'count')
         )
 
     @staticmethod
