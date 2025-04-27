@@ -65,6 +65,7 @@ export default function ManagerStatistics() {
                     height={employeeData.length * 100}
                     colors={cheerfulFiestaPalette}
                     margin={{left: 170}}
+                    barLabel="value"
                 />
                 <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
             </div>
@@ -77,7 +78,7 @@ export default function ManagerStatistics() {
                     layout="vertical"
                     height={employeeData.length * 100}
                     colors={cheerfulFiestaPalette}
-                    // margin={{top: 0}}
+                    barLabel="value"
                 />
             </div>
         </div>

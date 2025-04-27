@@ -28,9 +28,13 @@ export default function EmployeeStatistics() {
                 data: response,
                 highlightScope: { fade: 'global', highlight: 'item' },
                 faded: { innerRadius: 15, additionalRadius: -15},
+                arcLabel: (item) => `${item.value}`,
+                arcLabelMinAngle: 35,
+                arcLabelRadius: '60%',
             }]}
             width={400}
             height={200}
+
         />
     )
 }
