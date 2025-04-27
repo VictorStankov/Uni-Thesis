@@ -40,7 +40,6 @@ export default function ManagerStatistics() {
     return(
         <div className='grid grid-cols-2 w-full'>
             <div className='grid grid-cols-1 justify-center'>
-                <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
                 <BarChart
                     dataset={employeeData}
                     yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
@@ -51,6 +50,7 @@ export default function ManagerStatistics() {
                     colors={cheerfulFiestaPalette}
                     margin={{left: 170}}
                 />
+                <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
             </div>
         </div>
     )
