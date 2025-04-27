@@ -1,6 +1,5 @@
-from pypika_tortoise import CustomFunction
 from tortoise.functions import Count
-from tortoise.expressions import Function
+from tortoise.expressions import RawSQL
 
 from . import Order, CarAPI, OrderStatus, Employee, EmployeePosition
 from application.exceptions import NoEmployeesFoundOrderException
@@ -32,7 +31,7 @@ class OrderAPI:
         return await (
             Order.all()
             .annotate(
-                date=Extract_test('created_at', '%Y-%m'),
+                period=RawSQL("DATE_FORMAT(created_at, '%%Y-%%m')"),
                 count=Count('id')
             )
             .group_by('period')
@@ -75,6 +74,3 @@ class OrderAPI:
         )
 
         return order.id
-
-class Extract_test(Function):
-   database_func = CustomFunction("DATE_FORMAT", ["name", "dt_format"])
