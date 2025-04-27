@@ -1,6 +1,6 @@
 import {authFetch} from "../../../auth.jsx";
 import {useEffect, useState} from "react";
-import {BarChart, cheerfulFiestaPalette, ResponsiveChartContainer} from "@mui/x-charts";
+import {BarChart, cheerfulFiestaPalette} from "@mui/x-charts";
 import {Button} from "@mui/material";
 
 export default function ManagerStatistics() {
