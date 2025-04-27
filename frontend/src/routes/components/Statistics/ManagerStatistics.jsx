@@ -68,6 +68,18 @@ export default function ManagerStatistics() {
                 />
                 <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
             </div>
+            <div>
+                <BarChart
+                    dataset={monthlyOrders}
+                    series={[{dataKey: 'count'}]}
+                    grid={{ vertical: true }}
+                    xAxis={[{scaleType: 'band', dataKey: 'period'}]}
+                    layout="vertical"
+                    height={employeeData.length * 100}
+                    colors={cheerfulFiestaPalette}
+                    // margin={{top: 0}}
+                />
+            </div>
         </div>
     )
 }
