@@ -55,6 +55,13 @@ async def get_employee_order_statistics(employee: Employee):
 @statistics_blueprint.route('/monthly_order_statistics', methods=['GET'])
 @manager_login_required
 async def get_monthly_order_statistics(employee: Employee):
-    monthly_order_counts = await OrderAPI.get_monthly_order_counts()
+    monthly_orders = await OrderAPI.get_monthly_order_counts()
+    periods = sorted({data['period'] for data in monthly_orders})
 
-    return [{'period': month_count.date, 'count': month_count.count} for month_count in monthly_order_counts]
+    all_periods = pd.date_range(periods[0], periods[-1], freq='MS').strftime("%Y-%m").tolist()
+
+    for period in all_periods:
+        if period not in periods:
+            monthly_orders.append({'period': period, 'count': 0})
+
+    return sorted(monthly_orders, key=lambda month: month['period'])
