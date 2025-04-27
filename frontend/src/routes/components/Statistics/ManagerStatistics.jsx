@@ -6,6 +6,7 @@ import {Button} from "@mui/material";
 export default function ManagerStatistics() {
     const [employeeData, setEmployeeData] = useState([])
     const [statuses, setStatuses] = useState([{dataKey: 'temp'}])
+    const [monthlyOrders, setMonthlyOrders] = useState([{dataKey: 'temp'}])
     const [toggleCompleted, setToggleCompleted] = useState(true)
 
     const onClickToggle = () => {
@@ -31,6 +32,21 @@ export default function ManagerStatistics() {
                         stackOrder: 'reverse'
                     }))
                 );
+            })
+            .catch(reason => {
+                console.log(reason)
+            })
+
+        authFetch(`/api/monthly_order_statistics`, {
+            method: 'get'
+        })
+            .then(r => {
+                if (r.ok)
+                    return r.json()
+                throw new Error(r.statusText)
+            })
+            .then(data => {
+                    setMonthlyOrders(data);
             })
             .catch(reason => {
                 console.log(reason)
