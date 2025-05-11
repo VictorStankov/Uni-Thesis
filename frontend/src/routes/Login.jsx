@@ -24,6 +24,7 @@ export default function Login() {
                     if (token.access_token) {
                         login(token.access_token)
                         localStorage.setItem('is_employee', token.is_employee)
+                        localStorage.setItem('is_manager', token.is_manager)
                         navigate(-1)
                     } else {
                         setMessage(token.message)

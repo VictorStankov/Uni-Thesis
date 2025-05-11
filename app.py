@@ -9,6 +9,7 @@ app.register_blueprint(endpoints.authentication, url_prefix='/api')
 app.register_blueprint(endpoints.car_blueprint, url_prefix='/api')
 app.register_blueprint(endpoints.order_blueprint, url_prefix='/api')
 app.register_blueprint(endpoints.test_drive_blueprint, url_prefix='/api')
+app.register_blueprint(endpoints.statistics_blueprint, url_prefix='/api')
 
 
 @app.route('/', defaults={'path': ''})

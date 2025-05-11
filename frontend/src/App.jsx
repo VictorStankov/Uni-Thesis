@@ -9,6 +9,7 @@ import UserOrderDetails from "./routes/components/UserOrders/UserOrderDetails.js
 import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
 import EmployeeOrderDetails from "./routes/components/EmployeeTasks/Orders/EmployeeOrderDetails.jsx";
 import EmployeeTestDriveDetails from "./routes/components/EmployeeTasks/TestDrives/EmployeeTestDriveDetails.jsx";
+import Statistics from "./routes/Statistics.jsx";
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                 <Route path="/employee_test_drive/:id" element={<EmployeeTestDriveDetails/>}/>
                 <Route path="/orders" element={<OrdersList/>}/>
                 <Route path="/order/:id" element={<UserOrderDetails/>}/>
+                <Route path="/statistics" element={<Statistics/>}/>
                 <Route path="*" element={<Home/>}/>
             </Route>
         </Routes>
@@ -59,6 +61,13 @@ function Layout() {
                                         <Link to="/orders">Orders</Link>
                                     </li>
                                 :
+                                null
+                        }
+                        {
+                            loggedIn && is_employee ?
+                                    <li className="px-2">
+                                        <Link to="/statistics">Statistics</Link>
+                                    </li> :
                                 null
                         }
                         {

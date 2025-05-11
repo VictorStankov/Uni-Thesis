@@ -24,6 +24,10 @@ class UserAPI:
         return await Employee.filter(user__username=username).exists()
 
     @staticmethod
+    async def is_user_manager(username: str) -> bool:
+        return await Employee.filter(user__username=username, position__type='Manager').exists()
+
+    @staticmethod
     async def get_employee_by_username(username: str) -> Employee:
         return await Employee.filter(user__username=username).get_or_none()
 

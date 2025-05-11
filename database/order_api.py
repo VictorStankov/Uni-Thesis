@@ -1,4 +1,5 @@
 from tortoise.functions import Count
+from tortoise.expressions import RawSQL
 
 from . import Order, CarAPI, OrderStatus, Employee, EmployeePosition
 from application.exceptions import NoEmployeesFoundOrderException
@@ -20,6 +21,22 @@ class OrderAPI:
     @staticmethod
     async def get_employee_orders(employee_id: int):
         return await Order.filter(employee_id=employee_id).all()
+
+    @staticmethod
+    async def get_order_statuses():
+        return await OrderStatus.all().order_by('id')
+
+    @staticmethod
+    async def get_monthly_order_counts():
+        return await (
+            Order.all()
+            .annotate(
+                period=RawSQL("DATE_FORMAT(created_at, '%%Y-%%m')"),
+                count=Count('id')
+            )
+            .group_by('period')
+            .values('period', 'count')
+        )
 
     @staticmethod
     async def create_order(car_id: int, colour_id: int, interior_id: int, user_id: int):
