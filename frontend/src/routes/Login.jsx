@@ -16,8 +16,17 @@ export default function Login() {
     const onSubmitClick = (e) => {
         e.preventDefault()
 
-        fetch(`/api/login?username=${username}&password=${password}`, {
-            method: 'get'
+        const body = {
+            username: username,
+            password: password
+        }
+
+        fetch(`/api/login`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
         })
             .then(r => r.json())
             .then(token => {

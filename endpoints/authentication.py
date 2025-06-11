@@ -1,5 +1,5 @@
 from marshmallow.exceptions import ValidationError
-from quart import Blueprint, request, make_response
+from quart import Blueprint, request
 
 from application.exceptions import UserAlreadyExistsException
 from database import User
@@ -33,17 +33,15 @@ async def register():
         return {'message': e.message}, 400
 
 
-@authentication.route('/login', methods=['GET'])
+@authentication.route('/login', methods=['POST'])
 async def login():
-    args = {
-        'username': request.args.get('username'),
-        'password': request.args.get('password')
-    }
+    json = await request.json
 
     try:
-        result = UserLoginSchema().load(args)
+        result = UserLoginSchema().load(json)
     except ValidationError as e:
-        return e.messages, 400
+        print(e.messages)
+        return {'message': 'Internal server error'}, 400
 
     if (not await UserAPI.user_exists(username=result['username']) or
             not await UserAPI.verify_credentials(result['username'], result['password'])):
