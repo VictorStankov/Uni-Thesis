@@ -1,8 +1,7 @@
-import {useAuth, authFetch} from '../auth.jsx'
+import {authFetch} from '../auth.jsx'
 import {useState} from "react";
 
 export default function Home() {
-    const [loggedIn] = useAuth()
     const [message, setMessage] = useState({})
 
     const getBasicInfo = (e) => {
@@ -24,9 +23,8 @@ export default function Home() {
             )
     }
 
-    const [a] = useAuth()
     return (
-        <div className='flex-col'>
+        <div className='flex-col flex items-center'>
             <h1>HOME</h1>
             <button type='submit' onClick={getBasicInfo}>Get Info</button>
             <ul>

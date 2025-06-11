@@ -60,7 +60,7 @@ export default function Login() {
 
     const button = !(usernameInput && passwordInput)
     return (
-        <>
+        <div className='flex-col w-full justify-items-center'>
             <div className='p-10 flex-col justify-items-center w-1/4'>
 
                 <div>
@@ -104,6 +104,6 @@ export default function Login() {
                     <p className='mt-4 text-center text-red-500 text-wrap'>{message}</p>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

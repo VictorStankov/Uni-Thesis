@@ -247,7 +247,7 @@ export default function Register() {
     }
 
     return (
-        <>
+        <div className='flex-col w-full justify-items-center'>
             <div className='p-10 flex-col justify-items-center w-1/4'>
                 <div>
                     <img className="block mx-auto size-[11rem]"
@@ -265,6 +265,6 @@ export default function Register() {
                 </p>
                 <p className="mt-4 text-center text-wrap">{message}</p>
             </div>
-        </>
+        </div>
     )
 }
