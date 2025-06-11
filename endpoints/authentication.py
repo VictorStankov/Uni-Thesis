@@ -33,15 +33,12 @@ async def register():
         return {'message': e.message}, 400
 
 
-@authentication.route('/login', methods=['GET'])
+@authentication.route('/login', methods=['POST'])
 async def login():
-    args = {
-        'username': request.args.get('username'),
-        'password': request.args.get('password')
-    }
+    json = await request.json
 
     try:
-        result = UserLoginSchema().load(args)
+        result = UserLoginSchema().load(json)
     except ValidationError as e:
         return e.messages, 400
 
