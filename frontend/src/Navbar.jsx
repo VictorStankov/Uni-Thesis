@@ -13,8 +13,7 @@ export default function Navbar() {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <br/>
-            <nav className="bg-white shadow-md rounded-md mx-4 p-4">
+            <nav className="bg-white shadow-md rounded-md mx-4 mt-4 p-4">
                 <ul className="flex items-center justify-between">
                     <div className="flex space-x-6">
                         <li>
