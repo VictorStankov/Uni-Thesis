@@ -4,58 +4,63 @@ import {logout, useAuth} from "./auth.jsx";
 export default function Navbar() {
     const navigate = useNavigate();
     const [loggedIn] = useAuth();
-    const is_employee = localStorage.getItem('is_employee') === 'true'
+    const is_employee = localStorage.getItem('is_employee') === 'true';
+
+    const logoutAndRedirect = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
-        <div className="flex flex-col justify-start">
-            <nav>
-                <ul className="flex flex-auto px-6">
-                    <div className="flex flex-row w-full">
-                        <li className="px-2">
-                            <Link to="/">Home</Link>
+        <div className="min-h-screen bg-gray-100">
+            <br/>
+            <nav className="bg-white shadow-md rounded-md mx-4 p-4">
+                <ul className="flex items-center justify-between">
+                    <div className="flex space-x-6">
+                        <li>
+                            <Link to="/" className="text-gray-700 hover:text-indigo-600 font-medium">Home</Link>
                         </li>
-                        <li className="px-2">
-                            <Link to="/catalogue">Catalogue</Link>
+                        <li>
+                            <Link to="/catalogue" className="text-gray-700 hover:text-indigo-600 font-medium">Catalogue</Link>
                         </li>
-
                     </div>
-                    <div className="flex flex-row w-full justify-end">
-                        {
-                            loggedIn ?
-                                is_employee ?
-                                    <li className="px-2">
-                                        <Link to="/employee_tasks">Assigned Tasks</Link>
-                                    </li> :
-                                    <li className="px-2">
-                                        <Link to="/orders">Orders</Link>
-                                    </li>
-                                :
-                                null
-                        }
-                        {
-                            loggedIn && is_employee ?
-                                    <li className="px-2">
-                                        <Link to="/statistics">Statistics</Link>
-                                    </li> :
-                                null
-                        }
-                        {
-                            loggedIn ?
-                                <button className="px-2" onClick={() => {
-                                    logout();
-                                    navigate('/')
-                                }}>Log Out</button> :
-                                <li className="px-2">
-                                    <Link to="/login">Login</Link>
+
+                    <div className="flex items-center space-x-4">
+                        {loggedIn && (
+                            is_employee ? (
+                                <li>
+                                    <Link to="/employee_tasks" className="text-gray-700 hover:text-indigo-600 font-medium">Assigned Tasks</Link>
                                 </li>
-                        }
+                            ) : (
+                                <li>
+                                    <Link to="/orders" className="text-gray-700 hover:text-indigo-600 font-medium">Orders</Link>
+                                </li>
+                            )
+                        )}
+                        {loggedIn && is_employee && (
+                            <li>
+                                <Link to="/statistics" className="text-gray-700 hover:text-indigo-600 font-medium">Statistics</Link>
+                            </li>
+                        )}
+                        {loggedIn ? (
+                            <button
+                                onClick={logoutAndRedirect}
+                                className="text-red-600 hover:text-red-800 font-medium"
+                            >
+                                Log Out
+                            </button>
+                        ) : (
+                            <li>
+                                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium">Login</Link>
+                            </li>
+                        )}
                     </div>
-
                 </ul>
             </nav>
-            <div className="flex flex-row justify-center">
-                <Outlet/>
+
+            <div className="mt-6 px-4">
+                <Outlet />
             </div>
         </div>
-    )
+    );
 }
