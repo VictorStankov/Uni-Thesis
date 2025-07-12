@@ -4,7 +4,6 @@ import os
 import urllib.parse
 from typing import Union
 
-
 class ConfigHelper:
     def __init__(self):
         self._parse_config()
@@ -39,3 +38,5 @@ class ConfigHelper:
         self.__delattr__(parameter)
 
         return value
+
+config = ConfigHelper()
