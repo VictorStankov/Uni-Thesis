@@ -29,6 +29,10 @@ class ConfigHelper:
         self.database_password = urllib.parse.quote_plus(config['Database']['password'])
         self.database_schema = config['Database']['schema']
 
+        self.assistant_url = config['Assistant']['url']
+        self.assistant_port = config['Assistant']['port']
+        self.assistant_model = config['Assistant']['model']
+
     def get_config_value(self, parameter: str) -> Union[int, str]:
         if parameter not in self.__dict__:
             log.error('Parameter not found')
