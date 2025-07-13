@@ -10,6 +10,7 @@ import EmployeeTasksList from "./routes/EmployeeTasks.jsx";
 import EmployeeOrderDetails from "./routes/components/EmployeeTasks/Orders/EmployeeOrderDetails.jsx";
 import EmployeeTestDriveDetails from "./routes/components/EmployeeTasks/TestDrives/EmployeeTestDriveDetails.jsx";
 import Statistics from "./routes/Statistics.jsx";
+import AIChat from "./routes/Assistant.jsx";
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path="/orders" element={<OrdersList/>}/>
                 <Route path="/order/:id" element={<UserOrderDetails/>}/>
                 <Route path="/statistics" element={<Statistics/>}/>
+                <Route path="/assistant" element={<AIChat/>}/>
                 <Route path="*" element={<Home/>}/>
             </Route>
         </Routes>
