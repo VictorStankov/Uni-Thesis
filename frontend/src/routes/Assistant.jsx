@@ -8,29 +8,29 @@ export default function AIChat() {
 
     const readStreamMessage = async (response) => {
         if (!response.ok || !response.body) {
-                    throw new Error("No response body");
+            throw new Error("No response body")
+        }
+
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder("utf-8")
+        let finalText = ""
+
+        while (true) {
+            const {done, value} = await reader.read()
+            if (done) break
+
+            const chunk = decoder.decode(value, {stream: true})
+            finalText += chunk
+
+            setMessages((prev) => {
+                const updated = [...prev]
+                updated[updated.length === 0 ? 0 : updated.length - 1] = {
+                    role: "assistant",
+                    content: finalText,
                 }
-
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder("utf-8");
-                let finalText = "";
-
-                while (true) {
-                    const {done, value} = await reader.read();
-                    if (done) break;
-
-                    const chunk = decoder.decode(value, {stream: true});
-                    finalText += chunk;
-
-                    setMessages((prev) => {
-                        const updated = [...prev];
-                        updated[updated.length === 0 ? 0 : updated.length - 1] = {
-                            role: "assistant",
-                            content: finalText,
-                        };
-                        return updated;
-                    });
-                }
+                return updated
+            })
+        }
     }
 
     useEffect(() => {
@@ -58,24 +58,24 @@ export default function AIChat() {
                 headers: {"Content-Type": "application/json"},
             })
 
-                await readStreamMessage(res)
+            await readStreamMessage(res)
         } catch (err) {
-            console.error("Stream error:", err);
+            console.error("Stream error:", err)
         }
     }
 
-     const startChat = async () => {
-            try {
-                const res = await fetch(`/api/assistant/start_chat`, {method: "POST"})
+    const startChat = async () => {
+        try {
+            const res = await fetch(`/api/assistant/start_chat`, {method: "POST"})
 
-                await readStreamMessage(res)
+            await readStreamMessage(res)
 
-                setChatId(res.headers.get('chatId'))
+            setChatId(res.headers.get('chatId'))
 
-            } catch (err) {
-                console.error("Stream error:", err)
-            }
+        } catch (err) {
+            console.error("Stream error:", err)
         }
+    }
 
     return (
         <div className="p-4 max-w-xl mx-auto">
