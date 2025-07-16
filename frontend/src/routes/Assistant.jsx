@@ -34,7 +34,10 @@ export default function AIChat() {
     }
 
     useEffect(() => {
-    }, []);
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight
+        }
+    }, [messages])
 
 
     const handleSend = async () => {
