@@ -4,6 +4,7 @@ export default function AIChat() {
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState("")
     const [chatId, setChatId] = useState("")
+    const [chatStarted, setChatStarted] = useState(false)
     const chatRef = useRef(null)
 
     const readStreamMessage = async (response) => {
@@ -71,6 +72,7 @@ export default function AIChat() {
             await readStreamMessage(res)
 
             setChatId(res.headers.get('chatId'))
+            setChatStarted(true)
 
         } catch (err) {
             console.error("Stream error:", err)
@@ -113,7 +115,7 @@ export default function AIChat() {
                     onClick={startChat}
                     className="bg-indigo-600 text-white px-4 py-2 rounded"
                 >
-                    Start Chat
+                    {chatStarted ? "Restart Chat": "Start Chat"}
                 </button>
             </div>
         </div>
