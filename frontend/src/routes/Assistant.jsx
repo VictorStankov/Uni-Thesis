@@ -5,6 +5,7 @@ export default function AIChat() {
     const [input, setInput] = useState("")
     const [chatId, setChatId] = useState("")
     const [chatStarted, setChatStarted] = useState(false)
+    const [disabled, setDisabled] = useState(false)
     const chatRef = useRef(null)
 
     const readStreamMessage = async (response) => {
@@ -44,6 +45,8 @@ export default function AIChat() {
     const handleSend = async () => {
         if (!input.trim()) return
 
+        setDisabled(true)
+
         const userMessage = {role: "user", content: input}
         const updatedMessages = [...messages, userMessage]
         setMessages(updatedMessages)
@@ -63,9 +66,11 @@ export default function AIChat() {
         } catch (err) {
             console.error("Stream error:", err)
         }
+        setDisabled(false)
     }
 
     const startChat = async () => {
+        setDisabled(true)
         try {
             const res = await fetch(`/api/assistant/start_chat`, {method: "POST"})
 
@@ -77,6 +82,7 @@ export default function AIChat() {
         } catch (err) {
             console.error("Stream error:", err)
         }
+        setDisabled(false)
     }
 
     return (
@@ -107,12 +113,14 @@ export default function AIChat() {
                 />
                 <button
                     onClick={handleSend}
+                    disabled={disabled}
                     className="bg-indigo-600 text-white px-4 py-2 rounded"
                 >
                     Send
                 </button>
                 <button
                     onClick={startChat}
+                    disabled={disabled}
                     className="bg-indigo-600 text-white px-4 py-2 rounded"
                 >
                     {chatStarted ? "Restart Chat": "Start Chat"}
