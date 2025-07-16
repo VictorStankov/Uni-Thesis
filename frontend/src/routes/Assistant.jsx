@@ -34,20 +34,6 @@ export default function AIChat() {
     }
 
     useEffect(() => {
-        const startChat = async () => {
-            try {
-                const res = await fetch(`/api/assistant/start_chat`, {method: "POST"});
-
-                await readStreamMessage(res)
-
-                setChatId(res.headers.get('chatId'))
-
-            } catch (err) {
-                console.error("Stream error:", err);
-            }
-        };
-
-        startChat();
     }, []);
 
 
@@ -74,6 +60,19 @@ export default function AIChat() {
             console.error("Stream error:", err);
         }
     }
+
+     const startChat = async () => {
+            try {
+                const res = await fetch(`/api/assistant/start_chat`, {method: "POST"})
+
+                await readStreamMessage(res)
+
+                setChatId(res.headers.get('chatId'))
+
+            } catch (err) {
+                console.error("Stream error:", err)
+            }
+        }
 
     return (
         <div className="p-4 max-w-xl mx-auto">
@@ -106,6 +105,12 @@ export default function AIChat() {
                     className="bg-indigo-600 text-white px-4 py-2 rounded"
                 >
                     Send
+                </button>
+                <button
+                    onClick={startChat}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded"
+                >
+                    Start Chat
                 </button>
             </div>
         </div>
