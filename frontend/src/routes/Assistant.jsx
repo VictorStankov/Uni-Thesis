@@ -86,10 +86,10 @@ export default function AIChat() {
     }
 
     return (
-        <div className="p-4 max-w-xl mx-auto">
+        <div className="p-4 max-w-4xl mx-auto">
             <div
                 ref={chatRef}
-                className="h-80 overflow-y-auto border rounded-md p-4 space-y-2 bg-white shadow"
+                className="h-96 overflow-y-auto border rounded-md p-4 space-y-2 bg-white shadow"
             >
                 {messages.map((msg, idx) => (
                     <div
