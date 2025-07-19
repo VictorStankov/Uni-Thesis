@@ -74,8 +74,9 @@ export default function AIChat() {
     const startChat = async () => {
         setDisabled(true)
         try {
-            const res = await fetch(`/api/assistant/start_chat`, {method: "POST"})
+            setMessages([])
 
+            const res = await fetch(`/api/assistant/start_chat`, {method: "POST"})
             await readStreamMessage(res)
 
             setChatId(res.headers.get('chatId'))
