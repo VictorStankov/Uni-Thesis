@@ -1,4 +1,5 @@
 from . import Car, CarColour, CarInterior
+from application import frontend_url
 
 
 class CarAPI:
@@ -37,3 +38,10 @@ class CarAPI:
     @staticmethod
     async def get_car_interior(car_id: int):
         return await CarInterior.filter(car_id=car_id).order_by("-is_base", "price_increase", "interior_type").all()
+
+    @staticmethod
+    async def get_all_car_details():
+        cars = await Car.all().values('tags')
+        for i in range(len(cars)):
+            cars[i]['tags']['endpoint'] = frontend_url + cars[i]['tags'].get('endpoint', '')
+        return cars
