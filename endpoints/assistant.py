@@ -3,7 +3,7 @@ import uuid
 from marshmallow import ValidationError
 from quart import Blueprint, request, Response
 
-from application.assistant import AssistantMessages
+from assistant import AssistantMessages
 from .models import AssistantAddMessageSchema
 
 assistant_blueprint = Blueprint('assistant', __name__)
@@ -13,7 +13,7 @@ assistant_blueprint = Blueprint('assistant', __name__)
 async def start_chat():
     identifier = str(uuid.uuid4())
 
-    return AssistantMessages.start_chat(identifier), 200, {'chatId': identifier, 'Content-Type': 'text/plain'}
+    return await AssistantMessages.start_chat(identifier), 200, {'chatId': identifier, 'Content-Type': 'text/plain'}
 
 
 @assistant_blueprint.route('/assistant/add_message', methods=['POST'])

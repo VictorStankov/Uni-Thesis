@@ -3,7 +3,8 @@ from typing import Dict, List, Any
 
 import requests
 
-from .config_helper import config
+from database import CarAPI
+from application import config
 
 assistant_url = config.get_config_value('assistant_url')
 assistant_port = config.get_config_value('assistant_port')
@@ -13,10 +14,17 @@ class AssistantMessages:
     messages: Dict[str, List[Dict[str, Any]]] = {}
 
     @classmethod
-    def start_chat(cls, identifier: str):
+    async def start_chat(cls, identifier: str):
         cls.messages[identifier] = []
 
-        response = cls.make_chat_request(identifier, "You're a helpful assistant that aids people in choosing the right car for them", role='system')
+        response = cls.make_chat_request(
+            identifier=identifier,
+            message=f"""You're a helpful assistant that aids people in choosing the right car for them. You will be now
+             be talking with a person who will need your guidance. This is JSON
+             definition of the available cars:\n{await CarAPI.get_all_car_details()}. Only when the user has made their
+             choice, send them the link to go straight into the order page""",
+            role='system'
+        )
         return response
 
     @classmethod
@@ -46,7 +54,8 @@ class AssistantMessages:
                 json={
                     "model": assistant_model,
                     "messages": cls._get_messages(identifier),
-                    "stream": True
+                    "stream": True,
+                    "think": False
                 },
                 stream=True
             )
