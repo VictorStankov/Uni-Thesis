@@ -1,4 +1,6 @@
 import {useEffect, useRef, useState} from "react"
+import Markdown from 'react-markdown'
+
 
 export default function AIChat() {
     const [messages, setMessages] = useState([])
@@ -100,7 +102,7 @@ export default function AIChat() {
                                 : "bg-gray-100 text-left"
                         }`}
                     >
-                        <p className="whitespace-pre-line">{msg.content}</p>
+                        <Markdown>{msg.content}</Markdown>
                     </div>
                 ))}
             </div>
