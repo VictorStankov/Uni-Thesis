@@ -1,7 +1,6 @@
 from tortoise.contrib.quart import register_tortoise
 
-from application import config
-from application import app
+from application import config, app
 from .models import *
 from .user_api import UserAPI
 from .car_api import CarAPI
