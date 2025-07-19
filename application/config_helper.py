@@ -23,6 +23,11 @@ class ConfigHelper:
     def _parse_config(self):
         config = ConfigHelper._load_config()
         self.debug = int(config['Application']['debug'])
+        self.frontend_url = config['Application']['frontend_url']
+
+        if self.frontend_url and self.frontend_url[-1] == '/':
+            self.frontend_url = self.frontend_url[:-1]
+
         self.database_url = config['Database']['url']
         self.database_port = int(config['Database']['port'])
         self.database_username = config['Database']['username']
