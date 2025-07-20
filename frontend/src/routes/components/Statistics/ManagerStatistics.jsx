@@ -77,7 +77,7 @@ export default function ManagerStatistics() {
                 throw new Error(r.statusText)
             })
             .then(data => {
-                    setMonthlyOrders(data);
+                setMonthlyOrders(data)
             })
             .catch(reason => {
                 console.log(reason)
@@ -92,21 +92,21 @@ export default function ManagerStatistics() {
                 throw new Error(r.statusText)
             })
             .then(data => {
-                    setMonthlyTestDrives(data);
+                setMonthlyTestDrives(data)
             })
             .catch(reason => {
                 console.log(reason)
             })
-        }, [])
+    }, [])
 
-    return(
+    return (
         <div className='grid grid-cols-2 w-full'>
             <div className='grid grid-cols-1 justify-items-center'>
                 <h1 className="font-bold text-2xl">Order Status per Employee</h1>
                 <BarChart
                     dataset={employeeOrders}
-                    yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
-                    grid={{ vertical: true }}
+                    yAxis={[{scaleType: 'band', dataKey: 'email'}]}
+                    grid={{vertical: true}}
                     series={orderStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedOrders)}
                     layout="horizontal"
                     height={employeeOrders.length * 100}
@@ -119,8 +119,8 @@ export default function ManagerStatistics() {
                 <h1 className="font-bold text-2xl mt-8">Test Drive Status per Employee</h1>
                 <BarChart
                     dataset={employeeTestDrives}
-                    yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
-                    grid={{ vertical: true }}
+                    yAxis={[{scaleType: 'band', dataKey: 'email'}]}
+                    grid={{vertical: true}}
                     series={testDriveStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedTestDrives)}
                     layout="horizontal"
                     height={employeeTestDrives.length * 100}
@@ -135,7 +135,7 @@ export default function ManagerStatistics() {
                 <BarChart
                     dataset={monthlyOrders}
                     series={[{dataKey: 'count'}]}
-                    grid={{ vertical: true }}
+                    grid={{vertical: true}}
                     xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                     layout="vertical"
                     height={employeeOrders.length * 100}
@@ -147,7 +147,7 @@ export default function ManagerStatistics() {
                 <BarChart
                     dataset={monthlyTestDrives}
                     series={[{dataKey: 'count'}]}
-                    grid={{ vertical: true }}
+                    grid={{vertical: true}}
                     xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                     layout="vertical"
                     height={employeeOrders.length * 100}
