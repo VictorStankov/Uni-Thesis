@@ -1,3 +1,4 @@
+from tortoise.expressions import RawSQL
 from tortoise.functions import Count
 
 from . import Employee, EmployeePosition, TestDrive, TestDriveStatus
@@ -20,6 +21,22 @@ class TestDriveAPI:
     @staticmethod
     async def get_employee_test_drives(employee_id: int):
         return await TestDrive.filter(employee_id=employee_id).all()
+
+    @staticmethod
+    async def get_test_drive_statuses():
+        return await TestDriveStatus.all().order_by('id')
+
+    @staticmethod
+    async def get_monthly_test_drive_counts():
+        return await (
+            TestDrive.all()
+            .annotate(
+                period=RawSQL("DATE_FORMAT(created_at, '%%Y-%%m')"),
+                count=Count('id')
+            )
+            .group_by('period')
+            .values('period', 'count')
+        )
 
     @staticmethod
     async def create_test_drive(car_id: int, user_id: int):
