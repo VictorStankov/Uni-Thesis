@@ -58,6 +58,9 @@ async def get_monthly_order_statistics(employee: Employee):
     monthly_orders = await OrderAPI.get_monthly_order_counts()
     periods = sorted({data['period'] for data in monthly_orders})
 
+    if not periods:
+        return []
+
     all_periods = pd.date_range(periods[0], periods[-1], freq='MS').strftime("%Y-%m").tolist()
 
     for period in all_periods:
