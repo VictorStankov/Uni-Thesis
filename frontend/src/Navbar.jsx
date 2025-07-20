@@ -22,6 +22,9 @@ export default function Navbar() {
                         <li>
                             <Link to="/catalogue" className="text-gray-700 hover:text-indigo-600 font-medium">Catalogue</Link>
                         </li>
+                        <li>
+                            <Link to="/assistant" className="text-gray-700 hover:text-indigo-600 font-medium">Assistant</Link>
+                        </li>
                     </div>
 
                     <div className="flex items-center space-x-4">

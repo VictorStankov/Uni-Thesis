@@ -11,6 +11,7 @@ class Colour(Enum):
     Gray = 'Gray'
     Yellow = 'Yellow'
     White = 'White'
+    Brown = 'Brown'
 
 
 class CarColour(Model):

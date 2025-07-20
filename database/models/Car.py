@@ -17,6 +17,7 @@ class Car(Model):
     type = fields.data.CharEnumField(CarType)
     base_price = fields.FloatField(null=False)
     base_image_path = fields.CharField(max_length=255, null=False)
+    tags = fields.JSONField(null=True)
 
     def __str__(self):
         return f"{self.name} - {self.type.value}"

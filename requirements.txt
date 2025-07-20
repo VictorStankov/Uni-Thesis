@@ -5,3 +5,4 @@ tortoise-orm~=0.24.0
 tortoise-orm[asyncmy]
 PyJWT~=2.10.1
 pandas~=2.2.3
+requests~=2.32.4
