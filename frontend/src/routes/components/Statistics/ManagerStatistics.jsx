@@ -4,13 +4,21 @@ import {BarChart, cheerfulFiestaPalette} from "@mui/x-charts";
 import {Button} from "@mui/material";
 
 export default function ManagerStatistics() {
-    const [employeeData, setEmployeeData] = useState([])
-    const [statuses, setStatuses] = useState([{dataKey: 'temp'}])
+    const [employeeOrders, setEmployeeOrders] = useState([])
+    const [orderStatuses, setOrderStatuses] = useState([{dataKey: 'temp'}])
+    const [employeeTestDrives, setEmployeeTestDrives] = useState([])
+    const [testDriveStatuses, setTestDrivesStatuses] = useState([{dataKey: 'temp'}])
     const [monthlyOrders, setMonthlyOrders] = useState([{dataKey: 'temp'}])
-    const [toggleCompleted, setToggleCompleted] = useState(true)
+    const [monthlyTestDrives, setMonthlyTestDrives] = useState([{dataKey: 'temp'}])
+    const [toggleCompletedOrders, setToggleCompletedOrders] = useState(true)
+    const [toggleCompletedTestDrives, setToggleCompletedTestDrives] = useState(true)
 
-    const onClickToggle = () => {
-        setToggleCompleted(toggleCompleted === false)
+    const onOrderStatusToggle = () => {
+        setToggleCompletedOrders(toggleCompletedOrders === false)
+    }
+
+    const onTestDriveStatusToggle = () => {
+        setToggleCompletedTestDrives(toggleCompletedTestDrives === false)
     }
 
     useEffect(() => {
@@ -23,9 +31,32 @@ export default function ManagerStatistics() {
                 throw new Error(r.statusText)
             })
             .then(data => {
-                setEmployeeData(data.data);
-                setStatuses(
+                setEmployeeOrders(data.data);
+                setOrderStatuses(
                     data.order_statuses?.map(status => ({
+                        dataKey: status,
+                        label: status,
+                        stack: 'stack',
+                        stackOrder: 'reverse'
+                    }))
+                );
+            })
+            .catch(reason => {
+                console.log(reason)
+            })
+
+        authFetch(`/api/employee_test_drive_statistics`, {
+            method: 'get'
+        })
+            .then(r => {
+                if (r.ok)
+                    return r.json()
+                throw new Error(r.statusText)
+            })
+            .then(data => {
+                setEmployeeTestDrives(data.data);
+                setTestDrivesStatuses(
+                    data.test_drive_statuses?.map(status => ({
                         dataKey: status,
                         label: status,
                         stack: 'stack',
@@ -51,32 +82,75 @@ export default function ManagerStatistics() {
             .catch(reason => {
                 console.log(reason)
             })
-        }, []);
+
+        authFetch(`/api/monthly_test_drive_statistics`, {
+            method: 'get'
+        })
+            .then(r => {
+                if (r.ok)
+                    return r.json()
+                throw new Error(r.statusText)
+            })
+            .then(data => {
+                    setMonthlyTestDrives(data);
+            })
+            .catch(reason => {
+                console.log(reason)
+            })
+        }, [])
 
     return(
         <div className='grid grid-cols-2 w-full'>
-            <div className='grid grid-cols-1 justify-center'>
+            <div className='grid grid-cols-1 justify-items-center'>
+                <h1 className="font-bold text-2xl">Order Status per Employee</h1>
                 <BarChart
-                    dataset={employeeData}
+                    dataset={employeeOrders}
                     yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
                     grid={{ vertical: true }}
-                    series={statuses.filter((status) => status.dataKey !== 'Completed' || toggleCompleted)}
+                    series={orderStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedOrders)}
                     layout="horizontal"
-                    height={employeeData.length * 100}
+                    height={employeeOrders.length * 100}
                     colors={cheerfulFiestaPalette}
                     margin={{left: 170}}
                     barLabel="value"
                 />
-                <Button onClick={onClickToggle}>Toggle Completed Orders</Button>
+                <Button onClick={onOrderStatusToggle}>Toggle Completed Orders</Button>
+
+                <h1 className="font-bold text-2xl mt-8">Test Drive Status per Employee</h1>
+                <BarChart
+                    dataset={employeeTestDrives}
+                    yAxis={[{ scaleType: 'band', dataKey: 'email'}]}
+                    grid={{ vertical: true }}
+                    series={testDriveStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedTestDrives)}
+                    layout="horizontal"
+                    height={employeeTestDrives.length * 100}
+                    colors={cheerfulFiestaPalette}
+                    margin={{left: 170}}
+                    barLabel="value"
+                />
+                <Button onClick={onTestDriveStatusToggle}>Toggle Completed Test Drives</Button>
             </div>
-            <div>
+            <div className='grid grid-cols-1 justify-items-center'>
+                <h1 className="font-bold text-2xl">Historical Orders per Employee</h1>
                 <BarChart
                     dataset={monthlyOrders}
                     series={[{dataKey: 'count'}]}
                     grid={{ vertical: true }}
                     xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                     layout="vertical"
-                    height={employeeData.length * 100}
+                    height={employeeOrders.length * 100}
+                    colors={cheerfulFiestaPalette}
+                    barLabel="value"
+                />
+
+                <h1 className="font-bold text-2xl mt-8">Historical Test Drives per Employee</h1>
+                <BarChart
+                    dataset={monthlyTestDrives}
+                    series={[{dataKey: 'count'}]}
+                    grid={{ vertical: true }}
+                    xAxis={[{scaleType: 'band', dataKey: 'period'}]}
+                    layout="vertical"
+                    height={employeeOrders.length * 100}
                     colors={cheerfulFiestaPalette}
                     barLabel="value"
                 />
