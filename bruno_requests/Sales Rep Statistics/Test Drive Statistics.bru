@@ -1,0 +1,15 @@
+meta {
+  name: Test Drive Statistics
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/me/order_statistics
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}

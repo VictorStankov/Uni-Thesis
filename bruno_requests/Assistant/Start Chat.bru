@@ -1,0 +1,23 @@
+meta {
+  name: Start Chat
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/assistant/start_chat
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}
+
+script:post-response {
+  test("Status 200", function () {
+      var headers = res.getHeaders();
+      expect(res.getStatus()).to.equal(200);
+      bru.setEnvVar("chatId", headers.chatid);
+  });
+}

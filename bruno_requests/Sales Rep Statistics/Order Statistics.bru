@@ -1,0 +1,15 @@
+meta {
+  name: Order Statistics
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/me/order_statistics
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: Employee Test Drives by Status
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/employee_test_drive_statistics
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}

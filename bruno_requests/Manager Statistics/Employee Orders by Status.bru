@@ -1,0 +1,15 @@
+meta {
+  name: Employee Orders by Status
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/employee_order_statistics
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}

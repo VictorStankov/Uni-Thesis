@@ -1,6 +1,6 @@
 from quart import Blueprint
 
-from database import Employee, OrderAPI, EmployeeAPI
+from database import Employee, OrderAPI, EmployeeAPI, TestDriveAPI
 from endpoints.helpers import manager_login_required
 from endpoints.helpers.authentication import employee_login_required
 
@@ -17,6 +17,22 @@ async def get_self_order_statistics(employee: Employee):
 
     for order in orders:
         status = await order.status
+        if status.name not in results.keys():
+            results[status.name] = 1
+        else:
+            results[status.name] += 1
+
+    return [{'label': k, 'value': v} for k, v in results.items()]
+
+@statistics_blueprint.route('/me/test_drive_statistics', methods=['GET'])
+@employee_login_required
+async def get_self_test_drive_statistics(employee: Employee):
+    test_drives = await TestDriveAPI.get_employee_test_drives(employee.id)
+
+    results = {}
+
+    for test_drive in test_drives:
+        status = await test_drive.status
         if status.name not in results.keys():
             results[status.name] = 1
         else:
@@ -58,6 +74,9 @@ async def get_monthly_order_statistics(employee: Employee):
     monthly_orders = await OrderAPI.get_monthly_order_counts()
     periods = sorted({data['period'] for data in monthly_orders})
 
+    if not periods:
+        return []
+
     all_periods = pd.date_range(periods[0], periods[-1], freq='MS').strftime("%Y-%m").tolist()
 
     for period in all_periods:
@@ -65,3 +84,48 @@ async def get_monthly_order_statistics(employee: Employee):
             monthly_orders.append({'period': period, 'count': 0})
 
     return sorted(monthly_orders, key=lambda month: month['period'])
+
+@statistics_blueprint.route('/employee_test_drive_statistics', methods=['GET'])
+@manager_login_required
+async def get_employee_test_drive_statistics(employee: Employee):
+    employees = await EmployeeAPI.get_manager_employees(employee)
+    employee_test_drive_statuses = {}
+    for employee in employees:
+        employee_info = await EmployeeAPI.get_employee_info(employee)
+
+        employee_test_drives = await TestDriveAPI.get_employee_test_drives(employee.id)
+        employee_test_drive_statuses[employee_info.email] = [(await td.status).name for td in employee_test_drives]
+
+    results = []
+    for email, statuses in employee_test_drive_statuses.items():
+        summary = {}
+        for status in statuses:
+            if status not in summary.keys():
+                summary[status] = 1
+            else:
+                summary[status] += 1
+        summary['email'] = email
+        results.append(summary)
+
+    order_statuses = await TestDriveAPI.get_test_drive_statuses()
+
+    response = {'data': results, 'test_drive_statuses': [status.name for status in order_statuses]}
+
+    return response
+
+@statistics_blueprint.route('/monthly_test_drive_statistics', methods=['GET'])
+@manager_login_required
+async def get_monthly_test_drive_statistics(employee: Employee):
+    monthly_test_drives = await TestDriveAPI.get_monthly_test_drive_counts()
+    periods = sorted({data['period'] for data in monthly_test_drives})
+
+    if not periods:
+        return []
+
+    all_periods = pd.date_range(periods[0], periods[-1], freq='MS').strftime("%Y-%m").tolist()
+
+    for period in all_periods:
+        if period not in periods:
+            monthly_test_drives.append({'period': period, 'count': 0})
+
+    return sorted(monthly_test_drives, key=lambda month: month['period'])

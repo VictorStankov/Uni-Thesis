@@ -1,0 +1,21 @@
+meta {
+  name: Create Test Drive
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/test_drives
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}
+
+body:json {
+  {
+      "car_id": 2
+  }
+}
