@@ -1,0 +1,23 @@
+meta {
+  name: Create Order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/orders
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}
+
+body:json {
+  {
+      "car_id": 2,
+      "colour_id": 2,
+      "interior_id": 2
+  }
+}

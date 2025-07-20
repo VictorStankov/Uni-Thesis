@@ -1,0 +1,22 @@
+meta {
+  name: Post Message
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/assistant/add_message
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
+}
+
+body:json {
+  {
+      "chat_id": "{{chatId}}",
+      "message": ""
+  }
+}
