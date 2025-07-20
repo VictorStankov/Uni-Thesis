@@ -24,6 +24,22 @@ async def get_self_order_statistics(employee: Employee):
 
     return [{'label': k, 'value': v} for k, v in results.items()]
 
+@statistics_blueprint.route('/me/test_drive_statistics', methods=['GET'])
+@employee_login_required
+async def get_self_test_drive_statistics(employee: Employee):
+    test_drives = await TestDriveAPI.get_employee_test_drives(employee.id)
+
+    results = {}
+
+    for test_drive in test_drives:
+        status = await test_drive.status
+        if status.name not in results.keys():
+            results[status.name] = 1
+        else:
+            results[status.name] += 1
+
+    return [{'label': k, 'value': v} for k, v in results.items()]
+
 @statistics_blueprint.route('/employee_order_statistics', methods=['GET'])
 @manager_login_required
 async def get_employee_order_statistics(employee: Employee):
