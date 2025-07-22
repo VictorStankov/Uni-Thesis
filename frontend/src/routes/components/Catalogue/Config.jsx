@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {authFetch, useAuth} from "../../../auth.jsx";
 import {useNavigate} from "react-router-dom";
 
-export default function Config(props) {
+export default function Config({ name }) {
     const navigate = useNavigate()
 
     const [loggedIn] = useAuth()
@@ -17,125 +17,126 @@ export default function Config(props) {
     const [testDriveRequested, setTestDriveRequested] = useState(false)
 
     useEffect(() => {
-            fetch(`/api/cars/configs/${props.name}`, {
-                method: 'get'
-            })
-                .then(r => r.json())
-                .then(data => {
-                    setCar(data.car);
-                    setCarColours(data.colours);
-                    setCarInteriors(data.interiors);
+        fetch(`/api/cars/configs/${name}`)
+            .then(r => r.json())
+            .then(data => {
+                setCar(data.car);
+                setCarColours(data.colours);
+                setCarInteriors(data.interiors);
 
-                    setColour(data.colours.find(item => item.is_base === true))
-                    setInterior(data.interiors.find(item => item.is_base === true))
-                })
-        }, [props.name]);
+                setColour(data.colours.find(item => item.is_base))
+                setInterior(data.interiors.find(item => item.is_base))
+            })
+    }, [name]);
 
     const handleOrderSubmit = () => {
+        if (!loggedIn) return navigate('/login');
+
         const body = {
             car_id: car.id,
             colour_id: selectedColour.id,
             interior_id: selectedInterior.id
         }
 
-        if(loggedIn === false) {
-            navigate('/login')
-        }
-
         authFetch(`/api/orders`, {
             method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         })
             .then(r => {
-                    if (r.ok) {
-                        navigate('/') // TODO: Redirect to orders screen
-                    }
-                }
-            )
-            .catch(r => {
-                r.json().then((json) => {
-                    console.log(`${json.message}... Redirecting`) // TODO: Add Error Message
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 3000)
-                    }
-                )
+                if (r.ok) navigate('/orders')
             })
-    }
+            .catch(err => console.error(err));
+    };
 
     const handleTestDriveSubmit = () => {
+        if (!loggedIn) return navigate('/login');
+
         const body = {
             car_id: car.id
         }
 
-        if(loggedIn === false) {
-            navigate('/login')
-        }
-
         authFetch(`/api/test_drives`, {
             method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         })
             .then(r => {
-                    if (r.ok) {
-                        setTestDriveRequested(true)
-                    }
-                }
-            )
-            .catch(r => {
-                r.json().then((json) => {
-                    console.log(`${json.message}... Redirecting`) // TODO: Add Error Message
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 3000)
-                    }
-                )
+                if (r.ok) setTestDriveRequested(true);
             })
+            .catch(err => console.error(err));
     }
 
-    return(
-        <div className='flex-row flex flex-nowrap'>
-            <form className='p-2 flex flex-col'>
-                <p>{car.name === undefined ? car.name : ""}</p>
-                <p>Available Colours:</p>
-                <ul>
-                    {carColours.map((colour, index) => (
-                        <li key={colour.colour}>
-                            <input defaultChecked={colour.is_base} id="colour" type="radio" name="colour"
-                                   value={colour.colour} onClick={() => {
-                                setColour(colour)
-                            }}/>
-                            <label>{colour.colour}</label>
-                        </li>
-                    ))}
-                </ul>
-                <br/>
-                <p>Available Interiors:</p>
-                <ul>
-                    {carInteriors.map((interior, index) => (
-                        <li key={interior.interior}>
-                            <input defaultChecked={interior.is_base} id="interior" type="radio" name="interior"
-                                   value={interior.interior} onClick={() => {
-                                setInterior(interior)
-                            }}/>
-                            <label>{interior.interior}</label>
-                        </li>
-                    ))}
-                </ul>
-                <p>{car.base_price === undefined ? "" : car.base_price + selectedColour.price_increase + selectedInterior.price_increase}</p>
-                <button type="button" onClick={handleOrderSubmit}>Submit Order</button>
-                <button type="button" onClick={handleTestDriveSubmit}>Request Test Drive</button>
-                <p className='text-green-500'>{testDriveRequested ? "Test Drive requested successfully" : ""}</p>
+    return (
+        <div className="flex flex-col md:flex-row gap-8 p-8">
+            <form className="flex flex-col gap-6 w-full md:w-1/2 bg-white rounded-xl shadow p-6">
+                <h2 className="text-2xl font-bold">{car.name}</h2>
+
+                <div>
+                    <p className="font-semibold mb-1">Available Colours:</p>
+                    <div className="flex flex-wrap gap-3">
+                        {carColours.map(colour => (
+                            <label key={colour.colour} className="flex items-center gap-2">
+                                <input
+                                    type="radio"
+                                    name="colour"
+                                    defaultChecked={colour.is_base}
+                                    onChange={() => setColour(colour)}
+                                />
+                                {colour.colour}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div>
+                    <p className="font-semibold mb-1">Available Interiors:</p>
+                    <div className="flex flex-wrap gap-3">
+                        {carInteriors.map(interior => (
+                            <label key={interior.interior} className="flex items-center gap-2">
+                                <input
+                                    type="radio"
+                                    name="interior"
+                                    defaultChecked={interior.is_base}
+                                    onChange={() => setInterior(interior)}
+                                />
+                                {interior.interior}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="text-xl font-semibold text-gray-800">
+                    Total: ${car.base_price + selectedColour.price_increase + selectedInterior.price_increase}
+                </div>
+
+                <div className="flex flex-col gap-3">
+                    <button
+                        type="button"
+                        onClick={handleOrderSubmit}
+                        className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded transition"
+                    >
+                        Submit Order
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleTestDriveSubmit}
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded transition"
+                    >
+                        Request Test Drive
+                    </button>
+                    {testDriveRequested && (
+                        <p className="text-green-600 font-medium">Test drive requested successfully!</p>
+                    )}
+                </div>
             </form>
 
-            <div className=''>
-                <img className="w-full rounded-lg" src={'/img/' + car.base_image_path} alt="Picture of a car"/>
+            <div className="w-full md:w-1/2 flex items-center justify-center">
+                <img
+                    className="w-full rounded-xl shadow-lg object-cover"
+                    src={`/img/${car.base_image_path}`}
+                    alt={`Picture of ${car.name}`}
+                />
             </div>
         </div>
     )
