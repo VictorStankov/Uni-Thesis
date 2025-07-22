@@ -25,14 +25,17 @@ function Gallery() {
         }, []);
 
     return (
-        <div className='flex-col w-full'>
-            <h1 className='font-bold place-self-center text-2xl'>Catalogue</h1>
-            <div className='mt-16'>
-                <ul className='grid grid-flow-col justify-stretch items-stretch justify-items-center'>
-                    {cars.map((item, index) => (
-                        <Card className='w-full' key={item.id} img={item.base_image_path} name={item.name} price={item.base_price}/>
-                    ))}
-                </ul>
+        <div className="w-full px-8 py-10">
+            <h1 className="text-3xl font-bold text-center mb-10">Catalogue</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {cars.map(car => (
+                    <Card
+                        key={car.id}
+                        img={car.base_image_path}
+                        name={car.name}
+                        price={car.base_price}
+                    />
+                ))}
             </div>
         </div>
     )
