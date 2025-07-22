@@ -1,38 +1,33 @@
 import {useNavigate} from "react-router-dom";
 
-export default function UserOrderListItem(props) {
+export default function UserOrderListItem({ id, car_img, car_name, status, price }) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/order/' + props.id)
+        navigate('/order/' + id)
     }
 
     return (
-        <div className="px-4 sm rounded overflow-hidden shadow-lg w-full h-full">
-            <button onClick={handleClick} type={"button"} className="w-full overflow-hidden shadow-lg">
-                <div className='flex flex-row'>
-                    <div>
-                        <img className="w-32 px-4 py-4" src={'/img/' + props.car_img} alt="Picture of a car"/>
-                    </div>
-                    <div className="px-6 py-4">
-                        <p className="text-gray-700 text-base">
-                            {props.car_name}
-                        </p>
-                        <p className="text-gray-700 text-base">
-                            {props.status}
-                        </p>
-                        <p className="text-gray-700 text-base">
-                            {props.price}
-                        </p>
-                        <p className="text-gray-700 text-base">
-                            {props.created_on}
-                        </p>
-                        <p className="text-gray-700 text-base">
-                            {props.order_placer}
-                        </p>
-                    </div>
+        <div
+            onClick={handleClick}
+            className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 w-full"
+        >
+            <div className="flex items-center gap-4 p-4">
+                <img
+                    className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-lg border"
+                    src={`/img/${car_img}`}
+                    alt={`Picture of ${car_name}`}
+                />
+                <div className="flex flex-col justify-center">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1">{car_name}</h3>
+                    <p className="text-sm text-gray-600">
+                        <span className="font-medium text-gray-700">Status:</span> {status}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                        <span className="font-medium text-gray-700">Price:</span> ${price}
+                    </p>
                 </div>
-            </button>
+            </div>
         </div>
     )
 }
