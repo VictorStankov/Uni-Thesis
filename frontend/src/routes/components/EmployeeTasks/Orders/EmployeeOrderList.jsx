@@ -9,33 +9,39 @@ export default function EmployeeOrderList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-            authFetch(`/api/employee/orders`, {
-                method: 'get'
+        authFetch(`/api/employee/orders`)
+            .then(r => {
+                if (r.ok) return r.json()
+                throw new Error(r.statusText)
             })
-                .then(r => {
-                    if (r.ok)
-                        return r.json()
-                    throw new Error(r.statusText)
-                })
-                .then(data => {
-                    setOrders(data.orders);
-                })
-                .catch(reason => {
-                    console.log(reason)
-                    navigate('/employee_tasks')
-                })
-        }, []);
+            .then(data => setOrders(data.orders))
+            .catch(reason => {
+                console.error(reason)
+                navigate("/employee_tasks")
+            })
+    }, []);
 
     return (
-        <div className='flex-col flex-grow'>
-            <h1 className='font-bold place-self-center text-2xl'>Assigned Orders</h1>
-            <div className='mt-16 flex-grow'>
-                <ul className='flex-col items-center flex-grow'>
-                    {orders.map((item, index) => (
-                        <Card className='flex-grow' key={item.id} id={item.id} car_img={item.car.base_image_path} car_name={item.car.name} price={item.car.base_price} status={item.status.name} created_on={item.created_on} order_placer={item.user.email}/>
+        <div className="bg-white rounded-xl shadow p-6">
+            <h2 className="text-2xl font-semibold mb-6 text-center">Assigned Orders</h2>
+            {orders.length === 0 ? (
+                <p className="text-center text-gray-500">No assigned orders.</p>
+            ) : (
+                <ul className="space-y-4">
+                    {orders.map(item => (
+                        <Card
+                            key={item.id}
+                            id={item.id}
+                            car_img={item.car.base_image_path}
+                            car_name={item.car.name}
+                            price={item.car.base_price}
+                            status={item.status.name}
+                            created_on={item.created_on}
+                            order_placer={item.user.email}
+                        />
                     ))}
                 </ul>
-            </div>
+            )}
         </div>
     )
 }
