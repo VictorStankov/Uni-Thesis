@@ -13,21 +13,10 @@ export default function ManagerStatistics() {
     const [toggleCompletedOrders, setToggleCompletedOrders] = useState(true)
     const [toggleCompletedTestDrives, setToggleCompletedTestDrives] = useState(true)
 
-    const onOrderStatusToggle = () => {
-        setToggleCompletedOrders(toggleCompletedOrders === false)
-    }
-
-    const onTestDriveStatusToggle = () => {
-        setToggleCompletedTestDrives(toggleCompletedTestDrives === false)
-    }
-
     useEffect(() => {
-        authFetch(`/api/employee_order_statistics`, {
-            method: 'get'
-        })
+        authFetch(`/api/employee_order_statistics`)
             .then(r => {
-                if (r.ok)
-                    return r.json()
+                if (r.ok) return r.json()
                 throw new Error(r.statusText)
             })
             .then(data => {
@@ -45,12 +34,9 @@ export default function ManagerStatistics() {
                 console.log(reason)
             })
 
-        authFetch(`/api/employee_test_drive_statistics`, {
-            method: 'get'
-        })
+        authFetch(`/api/employee_test_drive_statistics`)
             .then(r => {
-                if (r.ok)
-                    return r.json()
+                if (r.ok) return r.json()
                 throw new Error(r.statusText)
             })
             .then(data => {
@@ -68,93 +54,97 @@ export default function ManagerStatistics() {
                 console.log(reason)
             })
 
-        authFetch(`/api/monthly_order_statistics`, {
-            method: 'get'
-        })
+        authFetch(`/api/monthly_order_statistics`)
             .then(r => {
-                if (r.ok)
-                    return r.json()
+                if (r.ok) return r.json()
                 throw new Error(r.statusText)
             })
-            .then(data => {
-                setMonthlyOrders(data)
-            })
+            .then(data => setMonthlyOrders(data))
             .catch(reason => {
-                console.log(reason)
+                console.error(reason)
             })
 
-        authFetch(`/api/monthly_test_drive_statistics`, {
-            method: 'get'
-        })
+        authFetch(`/api/monthly_test_drive_statistics`)
             .then(r => {
-                if (r.ok)
-                    return r.json()
+                if (r.ok) return r.json()
                 throw new Error(r.statusText)
             })
-            .then(data => {
-                setMonthlyTestDrives(data)
-            })
+            .then(data => setMonthlyTestDrives(data))
             .catch(reason => {
-                console.log(reason)
+                console.error(reason)
             })
     }, [])
 
     return (
-        <div className='grid grid-cols-2 w-full'>
-            <div className='grid grid-cols-1 justify-items-center'>
-                <h1 className="font-bold text-2xl">Order Status per Employee</h1>
-                <BarChart
-                    dataset={employeeOrders}
-                    yAxis={[{scaleType: 'band', dataKey: 'email'}]}
-                    grid={{vertical: true}}
-                    series={orderStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedOrders)}
-                    layout="horizontal"
-                    height={employeeOrders.length * 100}
-                    colors={cheerfulFiestaPalette}
-                    margin={{left: 170}}
-                    barLabel="value"
-                />
-                <Button onClick={onOrderStatusToggle}>Toggle Completed Orders</Button>
+        <div className="mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-8">
+                <div className="bg-white rounded-xl shadow p-6">
+                    <h2 className="text-xl font-semibold mb-4">Order Status per Employee</h2>
+                    <BarChart
+                        dataset={employeeOrders}
+                        yAxis={[{ scaleType: 'band', dataKey: 'email' }]}
+                        grid={{ vertical: true }}
+                        series={orderStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedOrders)}
+                        layout="horizontal"
+                        height={employeeOrders.length * 100}
+                        colors={cheerfulFiestaPalette}
+                        margin={{ left: 170 }}
+                        barLabel="value"
+                    />
+                    <Button onClick={() => setToggleCompletedOrders(prev => !prev)} className="mt-2">
+                        Toggle Completed Orders
+                    </Button>
+                </div>
 
-                <h1 className="font-bold text-2xl mt-8">Test Drive Status per Employee</h1>
-                <BarChart
-                    dataset={employeeTestDrives}
-                    yAxis={[{scaleType: 'band', dataKey: 'email'}]}
-                    grid={{vertical: true}}
-                    series={testDriveStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedTestDrives)}
-                    layout="horizontal"
-                    height={employeeTestDrives.length * 100}
-                    colors={cheerfulFiestaPalette}
-                    margin={{left: 170}}
-                    barLabel="value"
-                />
-                <Button onClick={onTestDriveStatusToggle}>Toggle Completed Test Drives</Button>
+
+                <div className="bg-white rounded-xl shadow p-6">
+                    <h2 className="text-xl font-semibold mb-4">Historical Orders per Employee</h2>
+                    <BarChart
+                        dataset={monthlyOrders}
+                        series={[{ dataKey: 'count' }]}
+                        grid={{ vertical: true }}
+                        xAxis={[{ scaleType: 'band', dataKey: 'period' }]}
+                        layout="vertical"
+                        height={employeeOrders.length * 100}
+                        colors={cheerfulFiestaPalette}
+                        barLabel="value"
+                    />
+                </div>
             </div>
-            <div className='grid grid-cols-1 justify-items-center'>
-                <h1 className="font-bold text-2xl">Historical Orders per Employee</h1>
-                <BarChart
-                    dataset={monthlyOrders}
-                    series={[{dataKey: 'count'}]}
-                    grid={{vertical: true}}
-                    xAxis={[{scaleType: 'band', dataKey: 'period'}]}
-                    layout="vertical"
-                    height={employeeOrders.length * 100}
-                    colors={cheerfulFiestaPalette}
-                    barLabel="value"
-                />
 
-                <h1 className="font-bold text-2xl mt-8">Historical Test Drives per Employee</h1>
-                <BarChart
-                    dataset={monthlyTestDrives}
-                    series={[{dataKey: 'count'}]}
-                    grid={{vertical: true}}
-                    xAxis={[{scaleType: 'band', dataKey: 'period'}]}
-                    layout="vertical"
-                    height={employeeOrders.length * 100}
-                    colors={cheerfulFiestaPalette}
-                    barLabel="value"
-                />
+            <div className="space-y-8">
+                <div className="bg-white rounded-xl shadow p-6">
+                    <h2 className="text-xl font-semibold mb-4">Test Drive Status per Employee</h2>
+                    <BarChart
+                        dataset={employeeTestDrives}
+                        yAxis={[{ scaleType: 'band', dataKey: 'email' }]}
+                        grid={{ vertical: true }}
+                        series={testDriveStatuses.filter((status) => status.dataKey !== 'Completed' || toggleCompletedTestDrives)}
+                        layout="horizontal"
+                        height={employeeTestDrives.length * 100}
+                        colors={cheerfulFiestaPalette}
+                        margin={{ left: 170 }}
+                        barLabel="value"
+                    />
+                    <Button onClick={() => setToggleCompletedTestDrives(prev => !prev)} className="mt-2">
+                        Toggle Completed Test Drives
+                    </Button>
+                </div>
+
+                <div className="bg-white rounded-xl shadow p-6">
+                    <h2 className="text-xl font-semibold mb-4">Historical Test Drives per Employee</h2>
+                    <BarChart
+                        dataset={monthlyTestDrives}
+                        series={[{dataKey: 'count'}]}
+                        grid={{vertical: true }}
+                        xAxis={[{scaleType: 'band', dataKey: 'period'}]}
+                        layout="vertical"
+                        height={employeeTestDrives.length * 100}
+                        colors={cheerfulFiestaPalette}
+                        barLabel="value"
+                    />
+                </div>
             </div>
         </div>
-    )
+    );
 }
