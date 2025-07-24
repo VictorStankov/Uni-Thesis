@@ -98,7 +98,7 @@ export default function ManagerStatistics() {
 
 
                 <div className="bg-white rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">Historical Orders per Employee</h2>
+                    <h2 className="text-xl font-semibold mb-4">Historical Orders per Month</h2>
                     <BarChart
                         dataset={monthlyOrders}
                         series={[{ dataKey: 'count' }]}
@@ -132,7 +132,7 @@ export default function ManagerStatistics() {
                 </div>
 
                 <div className="bg-white rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">Historical Test Drives per Employee</h2>
+                    <h2 className="text-xl font-semibold mb-4">Historical Test Drives per Month</h2>
                     <BarChart
                         dataset={monthlyTestDrives}
                         series={[{dataKey: 'count'}]}
