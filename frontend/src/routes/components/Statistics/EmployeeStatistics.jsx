@@ -28,7 +28,7 @@ export default function EmployeeStatistics() {
             })
     }, []);
 
-  return (
+    return (
         <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white rounded-xl shadow p-6 text-center">
                 <h2 className="text-xl font-semibold mb-4">Assigned Orders Statuses</h2>
@@ -42,7 +42,7 @@ export default function EmployeeStatistics() {
                         arcLabelRadius: '60%',
 
                     }]}
-                    width={400}
+                    width={500}
                     height={250}
                 />
             </div>
@@ -58,7 +58,7 @@ export default function EmployeeStatistics() {
                         arcLabelMinAngle: 35,
                         arcLabelRadius: '60%',
                     }]}
-                    width={400}
+                    width={500}
                     height={250}
                 />
             </div>
