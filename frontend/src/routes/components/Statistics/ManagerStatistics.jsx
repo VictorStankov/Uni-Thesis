@@ -143,7 +143,7 @@ export default function ManagerStatistics() {
                     <h2 className="text-xl font-semibold mb-4">Historical Test Drives per Month</h2>
                     <BarChart
                         dataset={monthlyTestDrives}
-                        series={[{dataKey: 'count'}]}
+                        series={testDriveStatuses}
                         grid={{vertical: true}}
                         xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                         layout="vertical"
