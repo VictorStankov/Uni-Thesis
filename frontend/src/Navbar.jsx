@@ -5,6 +5,7 @@ export default function Navbar() {
     const navigate = useNavigate();
     const [loggedIn] = useAuth();
     const is_employee = localStorage.getItem('is_employee') === 'true';
+    const is_manager = localStorage.getItem('is_manager') === 'true';
 
     const logoutAndRedirect = () => {
         logout();
@@ -28,7 +29,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        {loggedIn && (
+                        {loggedIn && !is_manager && (
                             is_employee ? (
                                 <li>
                                     <Link to="/employee_tasks" className="text-gray-700 hover:text-indigo-600 font-medium">Assigned Tasks</Link>
