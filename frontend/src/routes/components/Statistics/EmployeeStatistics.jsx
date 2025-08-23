@@ -7,41 +7,31 @@ export default function EmployeeStatistics() {
     const [testDrives, setTestDrives] = useState([])
 
     useEffect(() => {
-        authFetch(`/api/me/order_statistics`, {
-            method: 'get'
-        })
+        authFetch(`/api/me/order_statistics`)
             .then(r => {
-                if (r.ok)
-                    return r.json()
+                if (r.ok) return r.json()
                 throw new Error(r.statusText)
             })
-            .then(data => {
-                setOrders(data)
-            })
+            .then(data => setOrders(data))
             .catch(reason => {
-                console.log(reason)
+                console.error(reason)
             })
 
-        authFetch(`/api/me/test_drive_statistics`, {
-            method: 'get'
-        })
+        authFetch(`/api/me/test_drive_statistics`)
             .then(r => {
-                if (r.ok)
-                    return r.json()
+                if (r.ok) return r.json()
                 throw new Error(r.statusText)
             })
-            .then(data => {
-                setTestDrives(data)
-            })
+            .then(data => setTestDrives(data))
             .catch(reason => {
-                console.log(reason)
+                console.error(reason)
             })
     }, []);
 
     return (
-        <div className='grid grid-cols-2 w-full'>
-            <div className='grid grid-cols-1 justify-items-center'>
-                <h1 className="font-bold text-2xl">Assigned Orders Statuses</h1>
+        <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl shadow p-6 text-center">
+                <h2 className="text-xl font-semibold mb-4">Assigned Orders Statuses</h2>
                 <PieChart
                     series={[{
                         data: orders,
@@ -50,13 +40,15 @@ export default function EmployeeStatistics() {
                         arcLabel: (item) => `${item.value}`,
                         arcLabelMinAngle: 35,
                         arcLabelRadius: '60%',
+
                     }]}
-                    width={400}
-                    height={200}
+                    width={500}
+                    height={250}
                 />
             </div>
-            <div className='grid grid-cols-1 justify-items-center'>
-                <h1 className="font-bold text-2xl">Assigned Test Drives Statuses</h1>
+
+            <div className="bg-white rounded-xl shadow p-6 text-center">
+                <h2 className="text-xl font-semibold mb-4">Assigned Test Drives Statuses</h2>
                 <PieChart
                     series={[{
                         data: testDrives,
@@ -66,10 +58,10 @@ export default function EmployeeStatistics() {
                         arcLabelMinAngle: 35,
                         arcLabelRadius: '60%',
                     }]}
-                    width={400}
-                    height={200}
+                    width={500}
+                    height={250}
                 />
             </div>
         </div>
-    )
+    );
 }

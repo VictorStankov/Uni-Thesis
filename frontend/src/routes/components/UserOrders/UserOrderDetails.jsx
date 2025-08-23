@@ -9,39 +9,60 @@ export default function UserOrderDetails() {
     const [response, setResponse] = useState({})
 
     useEffect(() => {
-            authFetch(`/api/order/${id}`, {
-                method: 'get'
+        authFetch(`/api/order/${id}`)
+            .then(r => {
+                if (r.ok) return r.json()
+                throw new Error(r.statusText)
             })
-                .then(r => {
-                    if (r.ok)
-                        return r.json()
-                    throw new Error(r.statusText)
-                })
-                .then(data => {
-                    setResponse(data);
-                })
-                .catch(reason => {
+            .then(data => setResponse(data))
+            .catch(reason => {
                     console.log(reason)
                     navigate('/orders')
-                })
-        }, []);
+            })
+    }, []);
 
-    console.log(response)
+    const car = response?.car
+    const colour = response?.colour
+    const interior = response?.interior
+    const salesRep = response?.sales_rep
+    const status = response?.status
 
-    return(
-        <div className='flex-row flex flex-nowrap'>
-            <div className=''>
-                <img className="w-full rounded-lg" src={'/img/' + response?.car?.base_image_path} alt="Picture of a car"/>
+    return (
+        <div className="flex flex-col md:flex-row gap-8 p-8">
+            <div className="w-full md:w-1/2">
+                <img
+                    className="w-full h-auto rounded-xl shadow-md object-cover"
+                    src={`/img/${car?.base_image_path}`}
+                    alt={`Picture of ${car?.name}`}
+                />
             </div>
-            <div className='flex flex-col'>
-                <p>{response?.car?.name}</p>
-                <p>{response?.price}</p>
-                <p>{response?.colour?.colour} {response?.interior?.interior}</p>
-                <p>{response?.status?.name}</p>
-                <p>{response?.sales_rep?.first_name} {response?.sales_rep?.last_name}</p>
-                <div className='flex flex-row'>
-                    <a className='px-2' href={'mailto:' + response?.sales_rep?.email}>Email</a>
-                    <a className='px-2' href={'tel:' + response?.sales_rep?.phone}>Call</a>
+
+            <div className="w-full md:w-1/2 bg-white rounded-xl shadow-md p-6 flex flex-col gap-4">
+                <h2 className="text-2xl font-bold">{car?.name}</h2>
+
+                <div className="text-gray-700 space-y-1">
+                    <p><span className="font-semibold">Price:</span> ${response?.price}</p>
+                    <p><span className="font-semibold">Configuration:</span> {colour?.colour}, {interior?.interior}</p>
+                    <p><span className="font-semibold">Status:</span> {status?.name}</p>
+                </div>
+
+                <div className="mt-4">
+                    <h3 className="font-semibold mb-2">Sales Representative</h3>
+                    <p>{salesRep?.first_name} {salesRep?.last_name}</p>
+                    <div className="flex gap-4 mt-2">
+                        <a
+                            href={`mailto:${salesRep?.email}`}
+                            className="text-indigo-600 hover:underline"
+                        >
+                            Email
+                        </a>
+                        <a
+                            href={`tel:${salesRep?.phone}`}
+                            className="text-indigo-600 hover:underline"
+                        >
+                            Call
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

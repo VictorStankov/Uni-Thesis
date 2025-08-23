@@ -9,33 +9,38 @@ export default function OrdersList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-            authFetch(`/api/orders`, {
-                method: 'get'
+        authFetch(`/api/orders`)
+            .then(r => {
+                if (r.ok) return r.json()
+                throw new Error(r.statusText)
             })
-                .then(r => {
-                    if (r.ok)
-                        return r.json()
-                    throw new Error(r.statusText)
-                })
-                .then(data => {
-                    setOrders(data.orders);
-                })
-                .catch(reason => {
-                    console.log(reason)
-                    navigate('/')
-                })
-        }, []);
+            .then(data => setOrders(data.orders))
+            .catch(err => {
+                console.error(err)
+                navigate('/')
+            })
+    }, []);
 
     return (
-        <div className='flex-col flex-grow'>
-            <h1 className='font-bold place-self-center text-2xl'>Assigned Orders</h1>
-            <div className='mt-16 flex-grow'>
-                <ul className='flex-col items-center flex-grow'>
-                    {orders.map((item, index) => (
-                        <Card className='flex-grow' key={"item.id"} id={item.id} car_img={item.car.base_image_path} car_name={item.car.name} price={item.car.base_price} status={item.status.name} created_on={item.created_on}/>
+        <div className="px-6 py-10 max-w-5xl mx-auto w-full">
+            <h1 className="text-3xl font-bold text-center mb-10">Your Orders</h1>
+
+            {orders.length === 0 ? (
+                <p className="text-center text-gray-500">You have no orders yet.</p>
+            ) : (
+                <ul className="space-y-4">
+                    {orders.map((item) => (
+                        <Card
+                            key={item.id}
+                            id={item.id}
+                            car_img={item.car.base_image_path}
+                            car_name={item.car.name}
+                            price={item.car.base_price}
+                            status={item.status.name}
+                        />
                     ))}
                 </ul>
-            </div>
+            )}
         </div>
     )
 }
