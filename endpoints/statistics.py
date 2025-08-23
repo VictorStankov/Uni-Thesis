@@ -116,7 +116,7 @@ async def get_employee_test_drive_statistics(employee: Employee):
 @statistics_blueprint.route('/monthly_test_drive_statistics', methods=['GET'])
 @manager_login_required
 async def get_monthly_test_drive_statistics(employee: Employee):
-    monthly_test_drives = await TestDriveAPI.get_monthly_test_drive_counts()
+    monthly_test_drives = await TestDriveAPI.get_monthly_test_drive_counts(employee.id)
     periods = sorted({data['period'] for data in monthly_test_drives})
 
     if not periods:

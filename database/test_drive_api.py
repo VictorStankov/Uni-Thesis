@@ -1,7 +1,7 @@
-from tortoise.expressions import RawSQL
+from tortoise.expressions import RawSQL, Q
 from tortoise.functions import Count
 
-from . import Employee, EmployeePosition, TestDrive, TestDriveStatus
+from . import Employee, EmployeePosition, TestDrive, TestDriveStatus, EmployeeAPI
 from application.exceptions import NoEmployeesFoundOrderException
 
 
@@ -27,15 +27,24 @@ class TestDriveAPI:
         return await TestDriveStatus.all().order_by('id')
 
     @staticmethod
-    async def get_monthly_test_drive_counts():
+    async def get_monthly_test_drive_counts(manager_id):
+        manager = await EmployeeAPI.get_employee_by_employee_id(manager_id)
+        employees = await EmployeeAPI.get_manager_employees(manager)
+        test_drive_statuses = await TestDriveAPI.get_test_drive_statuses()
+
+        sums = {
+            x.name: RawSQL(f'CAST(SUM(CASE WHEN status_id = {x.id} THEN 1 ELSE 0 END) AS UNSIGNED)')
+            for x in test_drive_statuses
+        }
+
         return await (
-            TestDrive.all()
+            TestDrive.filter(Q(employee_id__in=[x.id for x in employees]))
             .annotate(
                 period=RawSQL("DATE_FORMAT(created_at, '%%Y-%%m')"),
-                count=Count('id')
+                **sums
             )
             .group_by('period')
-            .values('period', 'count')
+            .values('period', *sums.keys())
         )
 
     @staticmethod
