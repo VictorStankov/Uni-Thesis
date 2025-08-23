@@ -6,10 +6,13 @@ import {Button} from "@mui/material";
 export default function ManagerStatistics() {
     const [employeeOrders, setEmployeeOrders] = useState([])
     const [orderStatuses, setOrderStatuses] = useState([{dataKey: 'temp'}])
+
     const [employeeTestDrives, setEmployeeTestDrives] = useState([])
     const [testDriveStatuses, setTestDrivesStatuses] = useState([{dataKey: 'temp'}])
+
     const [monthlyOrders, setMonthlyOrders] = useState([{dataKey: 'temp'}])
     const [monthlyTestDrives, setMonthlyTestDrives] = useState([{dataKey: 'temp'}])
+
     const [toggleCompletedOrders, setToggleCompletedOrders] = useState(true)
     const [toggleCompletedTestDrives, setToggleCompletedTestDrives] = useState(true)
 
@@ -103,7 +106,7 @@ export default function ManagerStatistics() {
                     <h2 className="text-xl font-semibold mb-4">Historical Orders per Month</h2>
                     <BarChart
                         dataset={monthlyOrders}
-                        series={[{dataKey: 'count'}]}
+                        series={orderStatuses}
                         grid={{vertical: true}}
                         xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                         layout="vertical"
@@ -140,7 +143,7 @@ export default function ManagerStatistics() {
                     <h2 className="text-xl font-semibold mb-4">Historical Test Drives per Month</h2>
                     <BarChart
                         dataset={monthlyTestDrives}
-                        series={[{dataKey: 'count'}]}
+                        series={testDriveStatuses}
                         grid={{vertical: true}}
                         xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                         layout="vertical"

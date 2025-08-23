@@ -1,7 +1,7 @@
 from tortoise.functions import Count
-from tortoise.expressions import RawSQL
+from tortoise.expressions import RawSQL, Q
 
-from . import Order, CarAPI, OrderStatus, Employee, EmployeePosition
+from . import Order, CarAPI, OrderStatus, Employee, EmployeePosition, EmployeeAPI
 from application.exceptions import NoEmployeesFoundOrderException
 
 
@@ -27,15 +27,24 @@ class OrderAPI:
         return await OrderStatus.all().order_by('id')
 
     @staticmethod
-    async def get_monthly_order_counts():
+    async def get_monthly_order_counts(manager_id: int):
+        manager = await EmployeeAPI.get_employee_by_employee_id(manager_id)
+        employees = await EmployeeAPI.get_manager_employees(manager)
+        order_statuses = await OrderAPI.get_order_statuses()
+
+        sums = {
+            x.name: RawSQL(f'CAST(SUM(CASE WHEN status_id = {x.id} THEN 1 ELSE 0 END) AS UNSIGNED)')
+            for x in order_statuses
+        }
+
         return await (
-            Order.all()
+            Order.filter(Q(employee_id__in=[x.id for x in employees]))
             .annotate(
                 period=RawSQL("DATE_FORMAT(created_at, '%%Y-%%m')"),
-                count=Count('id')
+                **sums
             )
             .group_by('period')
-            .values('period', 'count')
+            .values('period', *sums.keys())
         )
 
     @staticmethod
