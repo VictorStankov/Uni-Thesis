@@ -71,7 +71,7 @@ async def get_employee_order_statistics(employee: Employee):
 @statistics_blueprint.route('/monthly_order_statistics', methods=['GET'])
 @manager_login_required
 async def get_monthly_order_statistics(employee: Employee):
-    monthly_orders = await OrderAPI.get_monthly_order_counts()
+    monthly_orders = await OrderAPI.get_monthly_order_counts(employee.id)
     periods = sorted({data['period'] for data in monthly_orders})
 
     if not periods:
