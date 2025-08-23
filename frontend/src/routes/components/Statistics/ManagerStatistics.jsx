@@ -106,7 +106,7 @@ export default function ManagerStatistics() {
                     <h2 className="text-xl font-semibold mb-4">Historical Orders per Month</h2>
                     <BarChart
                         dataset={monthlyOrders}
-                        series={[{dataKey: 'count'}]}
+                        series={orderStatuses}
                         grid={{vertical: true}}
                         xAxis={[{scaleType: 'band', dataKey: 'period'}]}
                         layout="vertical"
