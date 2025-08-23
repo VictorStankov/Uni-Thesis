@@ -6,10 +6,13 @@ import {Button} from "@mui/material";
 export default function ManagerStatistics() {
     const [employeeOrders, setEmployeeOrders] = useState([])
     const [orderStatuses, setOrderStatuses] = useState([{dataKey: 'temp'}])
+
     const [employeeTestDrives, setEmployeeTestDrives] = useState([])
     const [testDriveStatuses, setTestDrivesStatuses] = useState([{dataKey: 'temp'}])
+
     const [monthlyOrders, setMonthlyOrders] = useState([{dataKey: 'temp'}])
     const [monthlyTestDrives, setMonthlyTestDrives] = useState([{dataKey: 'temp'}])
+
     const [toggleCompletedOrders, setToggleCompletedOrders] = useState(true)
     const [toggleCompletedTestDrives, setToggleCompletedTestDrives] = useState(true)
 
