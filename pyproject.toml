@@ -1,0 +1,16 @@
+[project]
+name = "uni-thesis"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+dependencies = [
+    "bcrypt~=4.2.1",
+    "marshmallow~=3.26.0",
+    "pandas~=2.2.3",
+    "pyjwt~=2.10.1",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "quart~=0.20.0",
+    "requests~=2.32.4",
+    "tortoise-orm[asyncmy]~=0.24.0",
+]
