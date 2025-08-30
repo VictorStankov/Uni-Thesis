@@ -10,7 +10,7 @@ export default function UserOrderListItem({ id, car_img, car_name, status, price
     return (
         <div
             onClick={handleClick}
-            className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 w-full"
+            className="cursor-pointer bg-white rounded-xl shadow-xs hover:shadow-md transition-shadow duration-200 w-full"
         >
             <div className="flex items-center gap-4 p-4">
                 <img

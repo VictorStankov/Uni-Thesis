@@ -81,7 +81,7 @@ export default function ManagerStatistics() {
     return (
         <div className="mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-8">
-                <div className="bg-white rounded-xl shadow p-6 justify-items-center">
+                <div className="bg-white rounded-xl shadow-sm p-6 justify-items-center">
                     <h2 className="text-xl font-semibold mb-4">Order Status per Employee</h2>
                     <BarChart
                         dataset={employeeOrders}
@@ -102,7 +102,7 @@ export default function ManagerStatistics() {
                 </div>
 
 
-                <div className="bg-white rounded-xl shadow p-6 justify-items-center">
+                <div className="bg-white rounded-xl shadow-sm p-6 justify-items-center">
                     <h2 className="text-xl font-semibold mb-4">Historical Orders per Month</h2>
                     <BarChart
                         dataset={monthlyOrders}
@@ -118,7 +118,7 @@ export default function ManagerStatistics() {
             </div>
 
             <div className="space-y-8">
-                <div className="bg-white rounded-xl shadow p-6 justify-items-center">
+                <div className="bg-white rounded-xl shadow-sm p-6 justify-items-center">
                     <h2 className="text-xl font-semibold mb-4">Test Drive Status per Employee</h2>
                     <BarChart
                         dataset={employeeTestDrives}
@@ -139,7 +139,7 @@ export default function ManagerStatistics() {
 
                 </div>
 
-                <div className="bg-white rounded-xl shadow p-6 justify-items-center">
+                <div className="bg-white rounded-xl shadow-sm p-6 justify-items-center">
                     <h2 className="text-xl font-semibold mb-4">Historical Test Drives per Month</h2>
                     <BarChart
                         dataset={monthlyTestDrives}

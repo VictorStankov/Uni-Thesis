@@ -250,7 +250,7 @@ export default function Register() {
         <div className='flex-col w-full justify-items-center'>
             <div className='p-10 flex-col justify-items-center w-1/4'>
                 <div>
-                    <img className="block mx-auto size-[11rem]"
+                    <img className="block mx-auto size-44"
                          src={logo} alt="Atlas logo"/>
                     <h2 className="align-center text-lg font-bold md-10">Create New Account</h2>
                 </div>

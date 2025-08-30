@@ -64,7 +64,7 @@ export default function Login() {
             <div className='p-10 flex-col justify-items-center w-1/4'>
 
                 <div>
-                    <img className='block mx-auto size-[11rem]'
+                    <img className='block mx-auto size-44'
                          src={logo} alt="Atlas logo" />
                     <h2 className='align-center text-lg font-bold md-10' >Sign in
                         to your account</h2>

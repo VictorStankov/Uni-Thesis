@@ -22,7 +22,7 @@ export default function EmployeeTestDriveList() {
     }, []);
 
     return (
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow-sm p-6">
             <h2 className="text-2xl font-semibold mb-6 text-center">Assigned Test Drives</h2>
             {testDrives.length === 0 ? (
                 <p className="text-center text-gray-500">No assigned test drives.</p>
