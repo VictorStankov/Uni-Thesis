@@ -76,7 +76,7 @@ export default function Login() {
                             <label htmlFor="username">Username</label>
                             <div className="my-1">
                                 <input id="username" name="username" required
-                                       className='w-full p-2 border border-solid border-gray-300'
+                                       className='w-full p-2 border border-solid border-gray-300 bg-white'
                                        onChange={handleUsernameChange} value={username} />
                             </div>
 
@@ -84,7 +84,7 @@ export default function Login() {
                             <label htmlFor="password">Password</label>
                             <div className="my-1">
                                 <input id="password" name="password" type="password" required
-                                       className='w-full p-2 border border-solid border-gray-300'
+                                       className='w-full p-2 border border-solid border-gray-300 bg-white'
                                        onChange={handlePasswordChange} value={password} />
                             </div>
                         </div>

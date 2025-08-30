@@ -109,7 +109,7 @@ export default function AIChat() {
             </div>
             <div className="flex mt-4 gap-2">
                 <input
-                    className="flex-1 border p-2 rounded-sm"
+                    className="flex-1 border p-2 rounded-sm bg-white"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask me about a car..."

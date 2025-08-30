@@ -9,7 +9,7 @@ export default function Register() {
 
     const successInput = 'w-full p-2 border border-solid border-gray-300 bg-green-50'
     const errorInput = 'w-full p-2 border border-solid border-gray-300 bg-red-50'
-    const normalInput = 'w-full p-2 border border-solid border-gray-300'
+    const normalInput = 'w-full p-2 border border-solid border-gray-300 bg-white'
 
     const navigate = useNavigate()
 
