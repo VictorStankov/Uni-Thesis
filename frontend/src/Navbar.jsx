@@ -61,7 +61,7 @@ export default function Navbar() {
                 </ul>
             </nav>
 
-            <div className="mt-6 px-4">
+            <div className="mt-6">
                 <Outlet />
             </div>
         </div>
