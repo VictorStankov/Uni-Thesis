@@ -6,15 +6,15 @@ from tortoise.models import Model
 
 class Order(Model):
     id = fields.IntField(pk=True)
-    car = fields.ForeignKeyField('models.Car', related_name='order', related_query_name='order')
-    interior = fields.ForeignKeyField('models.CarInterior', related_name='order', related_query_name='order')
-    colour = fields.ForeignKeyField('models.CarColour', related_name='order', related_query_name='order')
+    car = fields.ForeignKeyField('models.Car', related_name='order')
+    interior = fields.ForeignKeyField('models.CarInterior', related_name='order')
+    colour = fields.ForeignKeyField('models.CarColour', related_name='order')
     price = fields.FloatField(null=False)
-    order_placer = fields.ForeignKeyField('models.User', related_name='order', related_query_name='order')
+    order_placer = fields.ForeignKeyField('models.User', related_name='order')
     created_at = fields.DatetimeField(null=False, auto_now_add=True)
     updated_at = fields.DatetimeField(null=False, auto_now=True)
-    status = fields.ForeignKeyField('models.OrderStatus', related_name='status', related_query_name='status')
-    employee = fields.ForeignKeyField('models.Employee', related_name='orders', related_query_name='orders', null=True) # FIXME
+    status = fields.ForeignKeyField('models.OrderStatus', related_name='status')
+    employee = fields.ForeignKeyField('models.Employee', related_name='orders', null=True) # FIXME
 
     def __str__(self):
         return (f"{self.id} - {self.car} - {self.interior} - {self.colour} - {self.price} - {self.order_placer} - "
