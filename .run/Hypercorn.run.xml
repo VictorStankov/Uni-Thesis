@@ -9,14 +9,14 @@
       <env name="QUART_APP" value="app:app" />
     </envs>
     <option name="SDK_HOME" value="" />
-    <option name="SDK_NAME" value="Python 3.12 (Uni-Thesis)" />
+    <option name="SDK_NAME" value="uv (Uni-Thesis)" />
     <option name="WORKING_DIRECTORY" value="" />
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="hypercorn" />
-    <option name="PARAMETERS" value="app:app -b 127.0.0.1:5000" />
+    <option name="PARAMETERS" value="app:app -b 0.0.0.0:5000" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="true" />
