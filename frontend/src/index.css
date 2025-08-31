@@ -17,3 +17,7 @@
     border-color: var(--color-gray-200, currentcolor);
   }
 }
+
+.slick-prev:before, .slick-next:before {
+  color: black !important;
+}
