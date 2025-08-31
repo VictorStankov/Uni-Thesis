@@ -15,7 +15,7 @@ class TestDrive(Model):
     created_at = fields.DatetimeField(null=False, auto_now_add=True)
     updated_at = fields.DatetimeField(null=False, auto_now=True)
     status = fields.ForeignKeyField('models.TestDriveStatus', related_name='status')
-    employee = fields.ForeignKeyField('models.Employee', related_name='test_drives', null=True) # FIXME
+    employee = fields.ForeignKeyField('models.Employee', related_name='test_drives')
 
     def __str__(self):
         return f"{self.id} - {self.car} - {self.requestor} - {self.created_at} - {self.status} - {self.employee}"
@@ -28,7 +28,7 @@ class TestDrive(Model):
             'updated_at': self.updated_at.isoformat(),
             'status': (await self.status).to_dict(),
             'requestor': (await self.requestor).id,
-            'employee': await (await self.employee).to_dict() if self.employee else {},  # FIXME
+            'employee': await (await self.employee).to_dict() if self.employee else {},
         }
 
     class Meta:
