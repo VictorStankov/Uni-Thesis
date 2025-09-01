@@ -13,8 +13,6 @@ async def app():
 
     return app
 
-    # clean up / reset resources here
-
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
 async def client(app):
