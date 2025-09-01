@@ -54,7 +54,7 @@ export default function Navbar() {
                             </button>
                         ) : (
                             <li>
-                                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium">Login</Link>
+                                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium">Log In</Link>
                             </li>
                         )}
                     </div>
