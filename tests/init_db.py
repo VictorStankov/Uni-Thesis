@@ -33,6 +33,8 @@ async def tortoise_db(client):
 
     await insert_cars()
     await insert_employees(client)
+    await insert_users(client)
+    await insert_data(client)
 
     yield
 
@@ -74,3 +76,41 @@ async def insert_employees(client):
     sales_rep_user = await User.filter(username="sales_rep").first()
     sales_rep_position = await EmployeePosition.filter(type=Position.SalesRepresentative).first()
     await Employee.create(user=sales_rep_user, position=sales_rep_position, manager=manager_employee)
+
+async def insert_users(client):
+    user_data = {
+        'username': 'user',
+        'password': 'user_pass',
+        'email': 'user@test.com',
+        'first_name': 'User',
+        'last_name': 'Test'
+    }
+
+    await client.post("/api/register", json=user_data)
+
+async def insert_data(client):
+    login_response = await client.post("/api/login", json={'username': 'user', 'password': 'user_pass'})
+    token = (await login_response.json)['access_token']
+
+    car_config = await client.get("/api/cars/configs/TestCar")
+    car_json = await car_config.json
+
+    assert car_config.status_code == 200
+
+    data = {
+        'car_id': car_json.get('car').get('id'),
+        'colour_id': car_json.get('colours')[0].get('id'),
+        'interior_id': car_json.get('interiors')[0].get('id'),
+    }
+
+    await client.post("/api/orders", json=data, headers={'Authorization': f'Bearer {token}'})
+
+    car_config = await client.get("/api/cars/configs/TestCar")
+    car_json = await car_config.json
+
+
+    data = {
+        'car_id': car_json.get('car').get('id')
+    }
+
+    await client.post("/api/test_drives", json=data, headers={'Authorization': f'Bearer {token}'})
