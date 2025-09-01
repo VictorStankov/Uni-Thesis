@@ -117,14 +117,14 @@ export default function AIChat() {
                 <button
                     onClick={handleSend}
                     disabled={disabled}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-sm"
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-sm cursor-pointer"
                 >
                     Send
                 </button>
                 <button
                     onClick={startChat}
                     disabled={disabled}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-sm"
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-sm cursor-pointer"
                 >
                     {chatStarted ? "Restart Chat": "Start Chat"}
                 </button>
