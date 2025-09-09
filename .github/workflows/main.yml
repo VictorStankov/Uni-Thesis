@@ -22,14 +22,7 @@ jobs:
       # Setup virtual env, install dependencies
       - name: Create new virtual env and activate it
         run: |
-          export PYENV_ROOT="$HOME/.pyenv"
-          [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-          eval "$(pyenv init -)"
-          pyenv activate uni-thesis-env
-          python3 -m venv venv
-          source venv/bin/activate
-          python3 -m pip install -r requirements.txt
-          python3 -m pip install hypercorn
+          uv sync
 
       - name: Build frontend
         run: |
@@ -49,9 +42,8 @@ jobs:
       - name: Execute application
         run: |
           cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
-          source venv/bin/activate
           RUNNER_TRACKING_ID=""
-          timeout --preserve-status 15s hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log
+          timeout --preserve-status 15s uv run hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log
 
   deploy:
     runs-on: self-hosted
@@ -66,6 +58,5 @@ jobs:
       - name: Run hypercorn
         run: |
           cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
-          source venv/bin/activate
           RUNNER_TRACKING_ID=""
-          hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log &
+          uv run hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log &
