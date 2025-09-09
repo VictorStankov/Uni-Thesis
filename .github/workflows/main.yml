@@ -43,7 +43,7 @@ jobs:
         run: |
           cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
           RUNNER_TRACKING_ID=""
-          timeout --preserve-status 15s uv run hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log
+          timeout --preserve-status 15s uv run hypercorn -w 1 -b 0.0.0.0:4000 app:app --log-file=hypercorn.log
 
   deploy:
     runs-on: self-hosted
@@ -59,4 +59,4 @@ jobs:
         run: |
           cp /home/vstankov/.project_configs/thesis_config.cfg ./config.cfg
           RUNNER_TRACKING_ID=""
-          uv run hypercorn -w 1 -b 127.0.0.1:4000 app:app --log-file=hypercorn.log &
+          uv run hypercorn -w 1 -b 0.0.0.0:4000 app:app --log-file=hypercorn.log &
