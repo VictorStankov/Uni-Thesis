@@ -12,6 +12,7 @@ dependencies = [
     "pytest>=8.4.1",
     "pytest-asyncio>=1.1.0",
     "quart~=0.20.0",
+    "quart-cors>=0.8.0",
     "requests~=2.32.4",
     "tortoise-orm[asyncmy]~=0.24.0",
 ]
