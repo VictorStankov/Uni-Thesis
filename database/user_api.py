@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import bcrypt
 
@@ -46,7 +46,7 @@ class UserAPI:
             email: str,
             first_name: str,
             last_name: str,
-            phone: str) -> None:
+            phone: Optional[str] = None) -> None:
         if await UserAPI.user_exists(username=username):
             raise UserAlreadyExistsException(username=username)
 
