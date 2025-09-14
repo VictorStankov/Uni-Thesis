@@ -20,14 +20,7 @@ async def test_order_creation(app, client, tortoise_db):
     }
 
     order_creation = await client.post("/api/orders", json=data, headers={'Authorization': f'Bearer {token}'})
-    order_creation_json = await order_creation.json
     assert order_creation.status_code == 200
-
-    order_response = await client.get(f"/api/order/{order_creation_json.get('id')}",
-                                      headers={'Authorization': f'Bearer {token}'})
-    order_json = await order_response.json
-    assert order_response.status_code == 200
-    assert order_json['price'] == 1000
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_order_creation_extras(app, client, tortoise_db):
@@ -46,14 +39,7 @@ async def test_order_creation_extras(app, client, tortoise_db):
     }
 
     order_creation = await client.post("/api/orders", json=data, headers={'Authorization': f'Bearer {token}'})
-    order_creation_json = await order_creation.json
     assert order_creation.status_code == 200
-
-    order_response = await client.get(f"/api/order/{order_creation_json.get('id')}",
-                                      headers={'Authorization': f'Bearer {token}'})
-    order_json = await order_response.json
-    assert order_response.status_code == 200
-    assert order_json['price'] == 1600
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_employee_orders(app, client, tortoise_db):

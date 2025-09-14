@@ -1,10 +1,10 @@
-from tortoise import Tortoise
-from application.config_helper import ConfigHelper
 import pytest_asyncio
+from tortoise import Tortoise
 
-from init_app import client
+from application.config_helper import ConfigHelper
 from database import (OrderStatus, TestDriveStatus, Car, CarType, CarColour, Colour, CarInterior,
                       Interior, User, Employee, EmployeePosition, Position)
+from init_app import client
 
 
 @pytest_asyncio.fixture(scope="module", autouse=True)

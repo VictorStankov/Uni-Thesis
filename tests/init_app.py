@@ -17,8 +17,3 @@ async def app():
 @pytest_asyncio.fixture(scope="session", autouse=True)
 async def client(app):
     return app.test_client()
-
-
-@pytest_asyncio.fixture(scope="session", autouse=True)
-async def runner(app):
-    return app.test_cli_runner()
