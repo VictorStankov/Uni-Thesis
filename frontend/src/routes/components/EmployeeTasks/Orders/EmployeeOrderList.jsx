@@ -22,7 +22,7 @@ export default function EmployeeOrderList() {
     }, []);
 
     return (
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow-sm p-6">
             <h2 className="text-2xl font-semibold mb-6 text-center">Assigned Orders</h2>
             {orders.length === 0 ? (
                 <p className="text-center text-gray-500">No assigned orders.</p>

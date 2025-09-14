@@ -69,7 +69,7 @@ export default function Config({ name }) {
 
     return (
         <div className="flex flex-col md:flex-row gap-8 p-8">
-            <form className="flex flex-col gap-6 w-full md:w-1/2 bg-white rounded-xl shadow p-6">
+            <form className="flex flex-col gap-6 w-full md:w-1/2 bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-2xl font-bold">{car.name}</h2>
 
                 <div>
@@ -114,14 +114,14 @@ export default function Config({ name }) {
                     <button
                         type="button"
                         onClick={handleOrderSubmit}
-                        className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded transition"
+                        className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-sm transition"
                     >
                         Submit Order
                     </button>
                     <button
                         type="button"
                         onClick={handleTestDriveSubmit}
-                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded transition"
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-sm transition"
                     >
                         Request Test Drive
                     </button>

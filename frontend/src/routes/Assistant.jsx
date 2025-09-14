@@ -92,7 +92,7 @@ export default function AIChat() {
         <div className="p-4 max-w-4xl mx-auto">
             <div
                 ref={chatRef}
-                className="h-96 overflow-y-auto border rounded-md p-4 space-y-2 bg-white shadow"
+                className="h-96 overflow-y-auto border rounded-md p-4 space-y-2 bg-white shadow-sm"
             >
                 {messages.map((msg, idx) => (
                     <div
@@ -109,7 +109,7 @@ export default function AIChat() {
             </div>
             <div className="flex mt-4 gap-2">
                 <input
-                    className="flex-1 border p-2 rounded"
+                    className="flex-1 border p-2 rounded-sm bg-white"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask me about a car..."
@@ -117,14 +117,14 @@ export default function AIChat() {
                 <button
                     onClick={handleSend}
                     disabled={disabled}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded"
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-sm cursor-pointer"
                 >
                     Send
                 </button>
                 <button
                     onClick={startChat}
                     disabled={disabled}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded"
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-sm cursor-pointer"
                 >
                     {chatStarted ? "Restart Chat": "Start Chat"}
                 </button>

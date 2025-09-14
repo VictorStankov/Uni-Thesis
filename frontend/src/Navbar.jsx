@@ -48,20 +48,20 @@ export default function Navbar() {
                         {loggedIn ? (
                             <button
                                 onClick={logoutAndRedirect}
-                                className="text-red-600 hover:text-red-800 font-medium"
+                                className="text-red-600 hover:text-red-800 font-medium cursor-pointer"
                             >
                                 Log Out
                             </button>
                         ) : (
                             <li>
-                                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium">Login</Link>
+                                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium">Log In</Link>
                             </li>
                         )}
                     </div>
                 </ul>
             </nav>
 
-            <div className="mt-6 px-4">
+            <div className="mt-6">
                 <Outlet />
             </div>
         </div>

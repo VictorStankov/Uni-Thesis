@@ -64,7 +64,7 @@ export default function Login() {
             <div className='p-10 flex-col justify-items-center w-1/4'>
 
                 <div>
-                    <img className='block mx-auto size-[11rem]'
+                    <img className='block mx-auto size-44'
                          src={logo} alt="Atlas logo" />
                     <h2 className='align-center text-lg font-bold md-10' >Sign in
                         to your account</h2>
@@ -76,7 +76,7 @@ export default function Login() {
                             <label htmlFor="username">Username</label>
                             <div className="my-1">
                                 <input id="username" name="username" required
-                                       className='w-full p-2 border border-solid border-gray-300'
+                                       className='w-full p-2 border border-solid border-gray-300 bg-white'
                                        onChange={handleUsernameChange} value={username} />
                             </div>
 
@@ -84,7 +84,7 @@ export default function Login() {
                             <label htmlFor="password">Password</label>
                             <div className="my-1">
                                 <input id="password" name="password" type="password" required
-                                       className='w-full p-2 border border-solid border-gray-300'
+                                       className='w-full p-2 border border-solid border-gray-300 bg-white'
                                        onChange={handlePasswordChange} value={password} />
                             </div>
                         </div>

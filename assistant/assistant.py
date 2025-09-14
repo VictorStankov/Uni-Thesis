@@ -69,7 +69,6 @@ class AssistantMessages:
                     except Exception:
                         continue
 
-            # Save assistant response to session memory
             cls._add_message(identifier, {
                 "role": "assistant",
                 "content": accumulated_response.strip()

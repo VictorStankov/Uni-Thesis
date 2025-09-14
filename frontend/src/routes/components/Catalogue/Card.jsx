@@ -13,7 +13,7 @@ export default function Card({ img, name, price }) {
             className="cursor-pointer bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-200 w-full h-full"
         >
             <img
-                className="w-full h-48 object-cover rounded-t-2xl"
+                className="w-full h-[15rem] object-cover rounded-t-2xl"
                 src={`/img/${img}`}
                 alt={`Picture of ${name}`}
             />
